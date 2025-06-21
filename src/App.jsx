@@ -342,7 +342,7 @@ export default function ResumeBuilder() {
   if (viewMode === "preview" && resumeData) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-black">
-        <div className="sticky top-0 bg-white/10  shadow-sm p-4 flex justify-between items-center">
+        <div className="sticky top-0 bg-white dark:bg-zinc-900  shadow-sm p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Resume Preview</h1>
           <div className="flex gap-2 flex-col md:flex-row">
             <Button onClick={() => setViewMode("edit")} variant="outline">
