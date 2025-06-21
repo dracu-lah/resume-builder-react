@@ -13,6 +13,7 @@ import { Plus, Minus, Download, Eye, Edit } from "lucide-react";
 import { sampleData } from "./sampleData";
 import { defaultValues, resumeSchema } from "./resumeSchema";
 import { ModeToggle } from "./components/shared/ModeToggle";
+import { DownloadJSONButton } from "./components/DownloadJSONButton";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -354,6 +355,7 @@ export default function ResumeBuilder() {
               <Download className="h-4 w-4 mr-2" />
               Download PDF
             </Button>
+            <DownloadJSONButton data={resumeData} />
           </div>
         </div>
         <div className="p-4">
