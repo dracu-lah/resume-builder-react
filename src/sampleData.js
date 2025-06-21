@@ -4,7 +4,7 @@ export const sampleData = {
     title: "ReactJS Developer",
     phone: "+919207932070",
     email: "nevilkrishna@gmail.com",
-    portfolioWebsite: "https://",
+    portfolioWebsite: "https://dracufolio.vercel.app/",
     summary:
       "FOSS enthusiast and React.js developer with hands-on experience crafting and testing web applications. Strong problem-solving abilities, skilled in debugging, and driven by a passion for building scalable, user-centric interfaces. Actively seeking new challenges in a dynamic and collaborative work environment.",
   },
