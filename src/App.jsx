@@ -15,6 +15,8 @@ import { defaultValues, resumeSchema } from "./resumeSchema";
 import { ModeToggle } from "./components/shared/ModeToggle";
 import { DownloadJSONButton } from "./components/DownloadJSONButton";
 import JSONFileUpload from "./components/JSONFileUpload";
+import { useAutoSave } from "./hooks/useAutoSave";
+import { toast } from "sonner";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -74,7 +76,13 @@ export default function ResumeBuilder() {
   const loadSampleData = () => {
     reset(sampleData);
   };
-
+  const saveToLocal = () => {
+    if (watch() && watch().personalInfo.name !== "") {
+      localStorage.setItem("resumeData", JSON.stringify(watch()));
+      toast.info("Auto Saved");
+    }
+  };
+  useAutoSave(control, saveToLocal, 2000);
   const ArrayFieldComponent = ({
     fields,
     append,
