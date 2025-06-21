@@ -16,6 +16,7 @@ export default function TextAreaFormField({
   type,
   className,
   disabled = false,
+  rows = {},
 }) {
   const { control } = useFormContext();
   return (
@@ -32,6 +33,7 @@ export default function TextAreaFormField({
           )}
           <FormControl>
             <Textarea
+              rows={rows}
               disabled={disabled}
               type={type}
               placeholder={placeholder}
