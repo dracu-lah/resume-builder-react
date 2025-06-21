@@ -14,7 +14,7 @@ const ArrayFieldComponent = ({
   rows = 3,
 }) => {
   return (
-    <div className="space-y-2">
+    <div key={name} className="space-y-2">
       <span className="text-sm font-medium">{label}</span>
       {fields.fields.map((field, index) => (
         <div key={field.id} className="flex gap-2 items-start">
