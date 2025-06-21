@@ -272,39 +272,41 @@ export default function ResumeBuilder() {
       </div>
 
       {/* Projects */}
-      <div className="mb-6">
-        <h2
-          className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
-          style={{ fontSize: "14pt" }}
-        >
-          PROJECTS
-        </h2>
-        {data.projects.map((project, index) => (
-          <div key={index} className="mb-4">
-            <h3 className="font-bold" style={{ fontSize: "12pt" }}>
-              {project.name}
-            </h3>
-            <p className="font-semibold mb-1" style={{ fontSize: "11pt" }}>
-              Role: {project.role}
-            </p>
-            <p className="text-justify mb-2" style={{ fontSize: "10pt" }}>
-              {project.description}
-            </p>
-            {project.technologies.filter(Boolean).length > 0 && (
-              <p style={{ fontSize: "10pt" }}>
-                <strong>Technologies:</strong>{" "}
-                {project.technologies.filter(Boolean).join(", ")}
+      {data.projects && data.projects.length > 0 && (
+        <div className="mb-6">
+          <h2
+            className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
+            style={{ fontSize: "14pt" }}
+          >
+            PROJECTS
+          </h2>
+          {data.projects.map((project, index) => (
+            <div key={index} className="mb-4">
+              <h3 className="font-bold" style={{ fontSize: "12pt" }}>
+                {project.name}
+              </h3>
+              <p className="font-semibold mb-1" style={{ fontSize: "11pt" }}>
+                Role: {project.role}
               </p>
-            )}
-            {project.features.filter(Boolean).length > 0 && (
-              <p style={{ fontSize: "10pt" }}>
-                <strong>Features:</strong>{" "}
-                {project.features.filter(Boolean).join(", ")}
+              <p className="text-justify mb-2" style={{ fontSize: "10pt" }}>
+                {project.description}
               </p>
-            )}
-          </div>
-        ))}
-      </div>
+              {project.technologies.filter(Boolean).length > 0 && (
+                <p style={{ fontSize: "10pt" }}>
+                  <strong>Technologies:</strong>{" "}
+                  {project.technologies.filter(Boolean).join(", ")}
+                </p>
+              )}
+              {project.features.filter(Boolean).length > 0 && (
+                <p style={{ fontSize: "10pt" }}>
+                  <strong>Features:</strong>{" "}
+                  {project.features.filter(Boolean).join(", ")}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Achievements */}
       {data.achievements.filter(Boolean).length > 0 && (
