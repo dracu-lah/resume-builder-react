@@ -14,8 +14,10 @@ import { ModeToggle } from "./components/shared/ModeToggle";
 import JSONFileUpload from "./components/JSONFileUpload";
 import { useAutoSave } from "./hooks/useAutoSave";
 import ResumePreviewPage from "@/pages/resume-preview";
-import ArrayFieldComponent from "./ArrayFieldComponent";
+import ArrayFormField from "@/components/FormElements/ArrayFormField";
 import { Form } from "@/components/ui/form";
+import BasicFormField from "./components/FormElements/BasicFormField";
+import TextAreaFormField from "./components/FormElements/TextAreaFormField";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -126,130 +128,50 @@ export default function ResumeBuilder() {
                     <CardTitle>Personal Information</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Full Name</Label>
-                      <Controller
-                        control={control}
-                        name="personalInfo.name"
-                        render={({ field }) => (
-                          <Input
-                            {...field}
-                            id="name"
-                            placeholder="Your full name"
-                          />
-                        )}
-                      />
-                      {errors.personalInfo?.name && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.personalInfo.name.message}
-                        </p>
-                      )}
-                    </div>
+                    <BasicFormField
+                      name="personalInfo.name"
+                      label="Full Name"
+                      placeholder="Your full name"
+                      required
+                    />
 
-                    <div>
-                      <Label htmlFor="title">Professional Title</Label>
-                      <Controller
-                        control={control}
-                        name="personalInfo.title"
-                        render={({ field }) => (
-                          <Input
-                            {...field}
-                            id="title"
-                            placeholder="e.g. Senior Software Developer"
-                          />
-                        )}
-                      />
-                      {errors.personalInfo?.title && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.personalInfo.title.message}
-                        </p>
-                      )}
-                    </div>
+                    <BasicFormField
+                      name="personalInfo.title"
+                      label="Professional Title"
+                      placeholder="e.g. Senior Software Developer"
+                      required
+                    />
 
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Controller
-                          control={control}
-                          name="personalInfo.phone"
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="phone"
-                              placeholder="+1234567890"
-                            />
-                          )}
-                        />
-                        {errors.personalInfo?.phone && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {errors.personalInfo.phone.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <div>
-                        <Label htmlFor="portfolioWebsite">
-                          Personal Website
-                        </Label>
-                        <Controller
-                          control={control}
-                          name="personalInfo.portfolioWebsite"
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="portfolioWebsite"
-                              placeholder="personalwebsite.me"
-                            />
-                          )}
-                        />
-                        {errors.personalInfo?.portfolioWebsite && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {errors.personalInfo.portfolioWebsite.message}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="email">Email Address</Label>
-                        <Controller
-                          control={control}
-                          name="personalInfo.email"
-                          render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="email"
-                              type="email"
-                              placeholder="your.email@example.com"
-                            />
-                          )}
-                        />
-                        {errors.personalInfo?.email && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {errors.personalInfo.email.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="summary">Professional Summary</Label>
-                      <Controller
-                        control={control}
-                        name="personalInfo.summary"
-                        render={({ field }) => (
-                          <Textarea
-                            {...field}
-                            id="summary"
-                            placeholder="Write a compelling summary of your professional background and expertise..."
-                            rows={5}
-                          />
-                        )}
+                      <BasicFormField
+                        name="personalInfo.phone"
+                        label="Phone Number"
+                        placeholder="+1234567890"
+                        required
                       />
-                      {errors.personalInfo?.summary && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.personalInfo.summary.message}
-                        </p>
-                      )}
+
+                      <BasicFormField
+                        name="personalInfo.portfolioWebsite"
+                        label="Personal Website"
+                        placeholder="personalwebsite.me"
+                      />
+
+                      <BasicFormField
+                        name="personalInfo.email"
+                        label="Email Address"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        required
+                      />
                     </div>
+
+                    <TextAreaFormField
+                      name="personalInfo.summary"
+                      label="Professional Summary"
+                      placeholder="Write a compelling summary of your professional background and expertise..."
+                      rows={5}
+                      required
+                    />
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -265,50 +187,33 @@ export default function ResumeBuilder() {
                       <Card key={field.id} className="mb-4">
                         <CardContent className="pt-6">
                           <div className="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                              <Label>Company Name</Label>
-                              <Controller
-                                control={control}
-                                name={`experience.${index}.company`}
-                                render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="Company name"
-                                  />
-                                )}
-                              />
-                            </div>
-                            <div>
-                              <Label>Position</Label>
-                              <Controller
-                                control={control}
-                                name={`experience.${index}.position`}
-                                render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="Your position"
-                                  />
-                                )}
-                              />
-                            </div>
-                          </div>
+                            <BasicFormField
+                              name={`experience.${index}.company`}
+                              label="Company Name"
+                              placeholder="Company name"
+                              required
+                            />
 
-                          <div className="mb-4">
-                            <Label>Duration</Label>
-                            <Controller
-                              control={control}
-                              name={`experience.${index}.duration`}
-                              render={({ field }) => (
-                                <Input
-                                  {...field}
-                                  placeholder="e.g. Jan 2020 - Present"
-                                />
-                              )}
+                            <BasicFormField
+                              name={`experience.${index}.position`}
+                              label="Position"
+                              placeholder="Your position"
+                              required
                             />
                           </div>
 
+                          <BasicFormField
+                            name={`experience.${index}.duration`}
+                            label="Duration"
+                            placeholder="e.g. Jan 2020 - Present"
+                            required
+                            className="mb-4"
+                          />
+
                           <div>
-                            <Label>Key Achievements</Label>
+                            <label className="block text-sm font-medium mb-1">
+                              Key Achievements
+                            </label>
                             <Controller
                               control={control}
                               name={`experience.${index}.achievements`}
@@ -400,7 +305,7 @@ export default function ResumeBuilder() {
                     <CardTitle>Technical Skills</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={languageFields}
                       append={languageFields.append}
                       remove={languageFields.remove}
@@ -409,7 +314,7 @@ export default function ResumeBuilder() {
                       label="Languages"
                     />
 
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={frameworkFields}
                       append={frameworkFields.append}
                       remove={frameworkFields.remove}
@@ -418,7 +323,7 @@ export default function ResumeBuilder() {
                       label="Frameworks & Libraries"
                     />
 
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={databaseFields}
                       append={databaseFields.append}
                       remove={databaseFields.remove}
@@ -427,7 +332,7 @@ export default function ResumeBuilder() {
                       label="Databases"
                     />
 
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={architectureFields}
                       append={architectureFields.append}
                       remove={architectureFields.remove}
@@ -436,7 +341,7 @@ export default function ResumeBuilder() {
                       label="Architectures"
                     />
 
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={toolFields}
                       append={toolFields.append}
                       remove={toolFields.remove}
@@ -445,7 +350,7 @@ export default function ResumeBuilder() {
                       label="Tools & Platforms"
                     />
 
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={methodologyFields}
                       append={methodologyFields.append}
                       remove={methodologyFields.remove}
@@ -454,7 +359,7 @@ export default function ResumeBuilder() {
                       label="Methodologies"
                     />
 
-                    <ArrayFieldComponent
+                    <ArrayFormField
                       fields={otherFields}
                       append={otherFields.append}
                       remove={otherFields.remove}
@@ -477,47 +382,27 @@ export default function ResumeBuilder() {
                       <Card key={field.id} className="mb-4">
                         <CardContent className="pt-6">
                           <div className="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                              <Label>Degree</Label>
-                              <Controller
-                                control={control}
-                                name={`education.${index}.degree`}
-                                render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="e.g. B.Tech Computer Science"
-                                  />
-                                )}
-                              />
-                            </div>
-                            <div>
-                              <Label>Institution</Label>
-                              <Controller
-                                control={control}
-                                name={`education.${index}.institution`}
-                                render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="University/College name"
-                                  />
-                                )}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="mb-4">
-                            <Label>Year</Label>
-                            <Controller
-                              control={control}
-                              name={`education.${index}.year`}
-                              render={({ field }) => (
-                                <Input
-                                  {...field}
-                                  placeholder="e.g. 2019-2023"
-                                />
-                              )}
+                            <BasicFormField
+                              name={`education.${index}.degree`}
+                              label="Degree"
+                              placeholder="e.g. B.Tech Computer Science"
+                              type="text"
+                            />
+                            <BasicFormField
+                              name={`education.${index}.institution`}
+                              label="Institution"
+                              placeholder="University/College name"
+                              type="text"
                             />
                           </div>
+
+                          <BasicFormField
+                            name={`education.${index}.year`}
+                            label="Year"
+                            placeholder="e.g. 2019-2023"
+                            type="text"
+                            className="mb-4"
+                          />
 
                           {educationFields.fields.length > 1 && (
                             <Button
@@ -561,51 +446,30 @@ export default function ResumeBuilder() {
                       <Card key={field.id} className="mb-4">
                         <CardContent className="pt-6">
                           <div className="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                              <Label>Project Name</Label>
-                              <Controller
-                                control={control}
-                                name={`projects.${index}.name`}
-                                render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="Project name"
-                                  />
-                                )}
-                              />
-                            </div>
-                            <div>
-                              <Label>Your Role</Label>
-                              <Controller
-                                control={control}
-                                name={`projects.${index}.role`}
-                                render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="e.g. Full-stack Developer"
-                                  />
-                                )}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="mb-4">
-                            <Label>Project Description</Label>
-                            <Controller
-                              control={control}
-                              name={`projects.${index}.description`}
-                              render={({ field }) => (
-                                <Textarea
-                                  {...field}
-                                  placeholder="Describe the project, your contributions, and the impact..."
-                                  rows={4}
-                                />
-                              )}
+                            <BasicFormField
+                              name={`projects.${index}.name`}
+                              label="Project Name"
+                              placeholder="Project name"
+                              type="text"
+                            />
+                            <BasicFormField
+                              name={`projects.${index}.role`}
+                              label="Your Role"
+                              placeholder="e.g. Full-stack Developer"
+                              type="text"
                             />
                           </div>
 
+                          <TextAreaFormField
+                            name={`projects.${index}.description`}
+                            label="Project Description"
+                            placeholder="Describe the project, your contributions, and the impact..."
+                            rows={4}
+                            className="mb-4"
+                          />
+
                           <div className="mb-4">
-                            <Label>Technologies Used</Label>
+                            <Label className="mb-2">Technologies Used</Label>
                             <Controller
                               control={control}
                               name={`projects.${index}.technologies`}
@@ -655,7 +519,7 @@ export default function ResumeBuilder() {
                           </div>
 
                           <div className="mb-4">
-                            <Label>Key Features</Label>
+                            <Label className="mb-2">Key Features</Label>
                             <Controller
                               control={control}
                               name={`projects.${index}.features`}
@@ -749,7 +613,7 @@ export default function ResumeBuilder() {
                       <CardTitle>Achievements & Certificates</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ArrayFieldComponent
+                      <ArrayFormField
                         fields={achievementFields}
                         append={achievementFields.append}
                         remove={achievementFields.remove}
@@ -765,7 +629,7 @@ export default function ResumeBuilder() {
                       <CardTitle>Interests</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ArrayFieldComponent
+                      <ArrayFormField
                         fields={interestFields}
                         append={interestFields.append}
                         remove={interestFields.remove}

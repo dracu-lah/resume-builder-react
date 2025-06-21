@@ -1,4 +1,4 @@
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,9 +12,10 @@ const ArrayFieldComponent = ({
   placeholder,
   label,
 }) => {
+  const { control } = useFormContext();
   return (
     <div className="space-y-2">
-      <Label className="text-sm font-medium">{label}</Label>
+      <Label className="text-sm mb-2 font-medium">{label}</Label>
       {fields.fields.map((field, index) => (
         <div key={field.id} className="flex gap-2">
           <Controller
