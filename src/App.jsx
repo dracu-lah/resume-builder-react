@@ -124,7 +124,8 @@ export default function ResumeBuilder() {
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
-      className="bg-white p-8 max-w-4xl mx-auto text-black"
+      data-theme="dark"
+      className="bg-white dark:bg-black  p-8 max-w-4xl mx-auto text-black"
       style={{
         fontFamily: "Arial, sans-serif",
         fontSize: "11pt",
@@ -366,7 +367,7 @@ export default function ResumeBuilder() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Resume Builder</h1>
-          <div className="flex gap-2">
+          <div className="flex flex-col md:flex-row gap-2">
             <Button onClick={loadSampleData} variant="outline">
               Load Sample Data
             </Button>
@@ -379,7 +380,7 @@ export default function ResumeBuilder() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <Tabs defaultValue="personal" className="space-y-4">
-            <TabsList className="grid w-full grid-cols-6">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-6 min-h-[400px] md:min-h-full">
               <TabsTrigger value="personal">Personal</TabsTrigger>
               <TabsTrigger value="experience">Experience</TabsTrigger>
               <TabsTrigger value="skills">Skills</TabsTrigger>
