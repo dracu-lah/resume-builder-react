@@ -373,10 +373,10 @@ export default function ResumeBuilder() {
           <h1 className="text-3xl font-bold">Resume Builder</h1>
           <div className="flex gap-2">
             <div className="flex flex-col md:flex-row gap-2">
-              <JSONFileUpload onUpload={(data) => reset(data)} />
               <Button onClick={loadSampleData} variant="outline">
                 Load Sample Data
               </Button>
+              <JSONFileUpload onUpload={(data) => reset(data)} />
               <Button onClick={handleSubmit(onSubmit)}>
                 <Eye className="h-4 w-4 mr-2" />
                 Generate Resume

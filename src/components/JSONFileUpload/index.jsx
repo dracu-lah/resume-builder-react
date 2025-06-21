@@ -12,13 +12,15 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Upload, FileText, CheckCircle, XCircle } from "lucide-react";
-import { resumeSchema } from "@/resumeSchema";
+import { defaultValues, resumeSchema } from "@/resumeSchema";
 import { z } from "zod";
+import { DownloadJSONButton } from "../DownloadJSONButton";
 
 export default function ResumeUploadModal({ onUpload }) {
   const [uploadedData, setUploadedData] = useState(null);
@@ -114,7 +116,7 @@ export default function ResumeUploadModal({ onUpload }) {
       <DialogTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <Upload className="h-4 w-4" />
-          Upload Resume JSON
+          Sample Data From JSON
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -123,9 +125,15 @@ export default function ResumeUploadModal({ onUpload }) {
             <FileText className="h-5 w-5" />
             Upload Resume JSON
           </DialogTitle>
-          <DialogDescription>
-            Upload a JSON file containing your resume data. The file will be
-            validated against the required schema.
+          <DialogDescription className="space-y-2">
+            <p>
+              Upload a JSON file containing your resume data. The file will be
+              validated against the required schema.
+            </p>
+            <DownloadJSONButton
+              data={defaultValues}
+              label="Download This JSON , Update & Reupload"
+            />
           </DialogDescription>
         </DialogHeader>
 
@@ -229,6 +237,11 @@ export default function ResumeUploadModal({ onUpload }) {
             </div>
           )}
         </div>
+
+        <DialogFooter className="text-xs">
+          Tip: Upload you current resume pdf to AI , sent the downloaded json in
+          chat and ask to update the json with the pdf. ( Thank me later! )
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
