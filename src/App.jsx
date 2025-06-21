@@ -14,6 +14,7 @@ import { sampleData } from "./sampleData";
 import { defaultValues, resumeSchema } from "./resumeSchema";
 import { ModeToggle } from "./components/shared/ModeToggle";
 import { DownloadJSONButton } from "./components/DownloadJSONButton";
+import JSONFileUpload from "./components/JSONFileUpload";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -372,6 +373,7 @@ export default function ResumeBuilder() {
           <h1 className="text-3xl font-bold">Resume Builder</h1>
           <div className="flex gap-2">
             <div className="flex flex-col md:flex-row gap-2">
+              <JSONFileUpload />
               <Button onClick={loadSampleData} variant="outline">
                 Load Sample Data
               </Button>
