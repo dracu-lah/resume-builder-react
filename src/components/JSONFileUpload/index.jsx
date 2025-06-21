@@ -198,7 +198,7 @@ export default function ResumeUploadModal({ onUpload }) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-gray-50 p-4 rounded-lg overflow-auto max-h-60">
+                <div className="bg-gray-50 dark:bg-background p-4 rounded-lg overflow-auto max-h-60">
                   <div className="text-sm space-y-2">
                     <div>
                       <strong>Name:</strong> {uploadedData.personalInfo.name}
