@@ -133,12 +133,13 @@ export default function ResumeBuilder() {
       }}
     >
       {/* Header */}
-      <div className="text-center mb-6">
+      <div className="flex  justify-between mb-6">
         <h1 className="text-2xl font-bold mb-2" style={{ fontSize: "18pt" }}>
           {data.personalInfo.name}
         </h1>
         <div className="text-sm space-y-1">
           <div>{data.personalInfo.phone}</div>
+          <div>{data.personalInfo.portfolioWebsite}</div>
           <div>{data.personalInfo.email}</div>
         </div>
       </div>
@@ -461,6 +462,25 @@ export default function ResumeBuilder() {
                       )}
                     </div>
 
+                    <div>
+                      <Label htmlFor="portfolioWebsite">Personal Website</Label>
+                      <Controller
+                        control={control}
+                        name="personalInfo.portfolioWebsite"
+                        render={({ field }) => (
+                          <Input
+                            {...field}
+                            id="portfolioWebsite"
+                            placeholder="personalwebsite.me"
+                          />
+                        )}
+                      />
+                      {errors.personalInfo?.phone && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.personalInfo.phone.message}
+                        </p>
+                      )}
+                    </div>
                     <div>
                       <Label htmlFor="email">Email Address</Label>
                       <Controller

@@ -3,6 +3,7 @@ export const sampleData = {
     name: "RAHUL KRISHNA P",
     title: "Frontend React Developer",
     phone: "+919846112233",
+    portfolioWebsite: "dracufolio.vercel.app",
     email: "rahulkrishna.dev@gmail.com",
     summary:
       "Dedicated and performance-oriented React Developer with 2 years of experience building responsive, component-driven web applications. Proficient in modern JavaScript (ES6+), React.js, Redux, and Tailwind CSS. Skilled in creating optimized UIs, integrating RESTful APIs, and managing state effectively. Experienced in working with Agile teams and contributing to scalable frontend architectures. Passionate about clean code, UI/UX, and continuous learning to stay ahead with the latest web trends.",
