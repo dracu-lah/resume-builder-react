@@ -23,7 +23,51 @@ export default function ResumeBuilder() {
   const [resumeData, setResumeData] = useState(null);
 
   const contentRef = useRef(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    pageStyle: `
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+    
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+      }
+      
+      .resume-container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      
+      /* Prevent page breaks in unwanted places */
+      .resume-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      
+      /* Control page breaks */
+      .page-break {
+        page-break-before: always;
+      }
+    }
+  `,
+    documentTitle: "Resume",
+    onBeforeGetContent: () => {
+      // Optional: You can modify content before printing
+      return Promise.resolve();
+    },
+    onAfterPrint: () => {
+      console.log("Print completed");
+    },
+    removeAfterPrint: true,
+  });
   const {
     control,
     handleSubmit,
@@ -134,15 +178,10 @@ export default function ResumeBuilder() {
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
-      className="bg-white   p-8 max-w-4xl mx-auto text-black"
-      style={{
-        fontFamily: "Arial, sans-serif",
-        fontSize: "11pt",
-        lineHeight: "1.4",
-      }}
+      className="bg-white   p-8 max-w-4xl resume-container mx-auto text-black"
     >
       {/* Header */}
-      <div className="flex  justify-between mb-6">
+      <div className="flex  justify-between mb-6 resume-section">
         <h1 className="text-2xl font-bold mb-2" style={{ fontSize: "18pt" }}>
           {data.personalInfo.name}
         </h1>
@@ -154,7 +193,7 @@ export default function ResumeBuilder() {
       </div>
 
       {/* Profile Summary */}
-      <div className="mb-6">
+      <div className="mb-6 resume-section">
         <h2
           className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
           style={{ fontSize: "14pt" }}
@@ -170,7 +209,7 @@ export default function ResumeBuilder() {
       </div>
 
       {/* Experience */}
-      <div className="mb-6">
+      <div className="mb-6 resume-section">
         <h2
           className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
           style={{ fontSize: "14pt" }}
@@ -209,7 +248,7 @@ export default function ResumeBuilder() {
       </div>
 
       {/* Technical Skills */}
-      <div className="mb-6">
+      <div className="mb-6 resume-section">
         <h2
           className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
           style={{ fontSize: "14pt" }}
@@ -263,7 +302,7 @@ export default function ResumeBuilder() {
       </div>
 
       {/* Education */}
-      <div className="mb-6">
+      <div className="mb-6 resume-section">
         <h2
           className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
           style={{ fontSize: "14pt" }}
@@ -280,7 +319,7 @@ export default function ResumeBuilder() {
 
       {/* Projects */}
       {data.projects && data.projects.length > 0 && (
-        <div className="mb-6">
+        <div className="mb-6 resume-section">
           <h2
             className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
             style={{ fontSize: "14pt" }}
@@ -317,7 +356,7 @@ export default function ResumeBuilder() {
 
       {/* Achievements */}
       {data.achievements.filter(Boolean).length > 0 && (
-        <div className="mb-6">
+        <div className="mb-6 resume-section">
           <h2
             className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
             style={{ fontSize: "14pt" }}
@@ -336,7 +375,7 @@ export default function ResumeBuilder() {
 
       {/* Interests */}
       {data.interests.filter(Boolean).length > 0 && (
-        <div className="mb-6">
+        <div className="mb-6 resume-section">
           <h2
             className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
             style={{ fontSize: "14pt" }}
