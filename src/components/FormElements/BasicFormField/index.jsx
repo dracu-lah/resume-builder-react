@@ -26,7 +26,7 @@ export default function BasicFormField({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className="flex flex-col w-full">
           {label && (
             <FormLabel>
               {label} {required && <span className="text-red-500">*</span>}

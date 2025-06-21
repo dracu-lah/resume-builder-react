@@ -1,8 +1,7 @@
-import { Controller, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Plus, Minus } from "lucide-react";
+import BasicFormField from "@/components/FormElements/BasicFormField";
+import TextAreaFormField from "@/components/FormElements/TextAreaFormField";
 
 const ArrayFieldComponent = ({
   fields,
@@ -11,21 +10,28 @@ const ArrayFieldComponent = ({
   name,
   placeholder,
   label,
+  type = "input",
+  rows = 3,
 }) => {
-  const { control } = useFormContext();
   return (
     <div className="space-y-2">
-      <Label className="text-sm mb-2 font-medium">{label}</Label>
+      <span className="text-sm font-medium">{label}</span>
       {fields.fields.map((field, index) => (
-        <div key={field.id} className="flex gap-2">
-          <Controller
-            control={control}
-            name={`${name}.${index}`}
-            render={({ field }) => (
-              <Input {...field} placeholder={placeholder} className="flex-1" />
-            )}
-          />
-          {fields.length > 1 && (
+        <div key={field.id} className="flex gap-2 items-start">
+          {type === "input" ? (
+            <BasicFormField
+              name={`${name}.${index}`}
+              placeholder={placeholder}
+              type="text"
+            />
+          ) : (
+            <TextAreaFormField
+              name={`${name}.${index}`}
+              placeholder={placeholder}
+              rows={rows}
+            />
+          )}
+          {fields.fields.length > 1 && (
             <Button
               type="button"
               variant="outline"
@@ -49,4 +55,5 @@ const ArrayFieldComponent = ({
     </div>
   );
 };
+
 export default ArrayFieldComponent;

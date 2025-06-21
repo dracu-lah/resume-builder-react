@@ -6,7 +6,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { useFormContext } from "react-hook-form"; // Import useFormContext
+import { useFormContext } from "react-hook-form";
 
 export default function TextAreaFormField({
   name,
@@ -25,7 +25,7 @@ export default function TextAreaFormField({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className="flex flex-col w-full">
           {label && (
             <FormLabel>
               {label} {required && <span className="text-red-500">*</span>}
