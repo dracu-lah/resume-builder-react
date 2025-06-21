@@ -14,6 +14,7 @@ import { ModeToggle } from "./components/shared/ModeToggle";
 import JSONFileUpload from "./components/JSONFileUpload";
 import { useAutoSave } from "./hooks/useAutoSave";
 import ResumePreviewPage from "./pages/resume-preview";
+import ArrayFieldComponent from "./ArrayFieldComponent";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -77,54 +78,6 @@ export default function ResumeBuilder() {
     }
   };
   useAutoSave(control, saveToLocal, 2000);
-  const ArrayFieldComponent = ({
-    fields,
-    append,
-    remove,
-    name,
-    placeholder,
-    label,
-  }) => {
-    return (
-      <div className="space-y-2">
-        <Label className="text-sm font-medium">{label}</Label>
-        {fields.fields.map((field, index) => (
-          <div key={field.id} className="flex gap-2">
-            <Controller
-              control={control}
-              name={`${name}.${index}`}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  placeholder={placeholder}
-                  className="flex-1"
-                />
-              )}
-            />
-            {fields.length > 1 && (
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => remove(index)}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => append("")}
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add {label.slice(0, -1)}
-        </Button>
-      </div>
-    );
-  };
 
   if (viewMode === "preview" && resumeData) {
     return (
