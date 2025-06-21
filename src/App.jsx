@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Minus, Download, Eye, Edit } from "lucide-react";
 import { sampleData } from "./sampleData";
 import { defaultValues, resumeSchema } from "./resumeSchema";
+import { ModeToggle } from "./components/shared/ModeToggle";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -341,9 +342,9 @@ export default function ResumeBuilder() {
   if (viewMode === "preview" && resumeData) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-black">
-        <div className="sticky top-0 bg-white shadow-sm p-4 flex justify-between items-center">
+        <div className="sticky top-0 bg-white/10  shadow-sm p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Resume Preview</h1>
-          <div className="flex flex-col md:flex-row gap-2">
+          <div className="flex gap-2 flex-col md:flex-row">
             <Button onClick={() => setViewMode("edit")} variant="outline">
               <Edit className="h-4 w-4 mr-2" />
               Edit Resume
@@ -366,14 +367,18 @@ export default function ResumeBuilder() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Resume Builder</h1>
-          <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={loadSampleData} variant="outline">
-              Load Sample Data
-            </Button>
-            <Button onClick={handleSubmit(onSubmit)}>
-              <Eye className="h-4 w-4 mr-2" />
-              Generate Resume
-            </Button>
+          <div className="flex gap-2">
+            <div className="flex flex-col md:flex-row gap-2">
+              <Button onClick={loadSampleData} variant="outline">
+                Load Sample Data
+              </Button>
+              <Button onClick={handleSubmit(onSubmit)}>
+                <Eye className="h-4 w-4 mr-2" />
+                Generate Resume
+              </Button>
+            </div>
+
+            <ModeToggle />
           </div>
         </div>
 
