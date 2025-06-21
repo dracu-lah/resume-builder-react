@@ -139,8 +139,8 @@ export default function ResumeBuilder() {
         </h1>
         <div className="text-sm space-y-1">
           <div>{data.personalInfo.phone}</div>
-          <div>{data.personalInfo.portfolioWebsite}</div>
           <div>{data.personalInfo.email}</div>
+          <div>{data.personalInfo.portfolioWebsite}</div>
         </div>
       </div>
 
@@ -475,9 +475,9 @@ export default function ResumeBuilder() {
                           />
                         )}
                       />
-                      {errors.personalInfo?.phone && (
+                      {errors.personalInfo?.portfolioWebsite && (
                         <p className="text-red-500 text-sm mt-1">
-                          {errors.personalInfo.phone.message}
+                          {errors.personalInfo.portfolioWebsite.message}
                         </p>
                       )}
                     </div>
