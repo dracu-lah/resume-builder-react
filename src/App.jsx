@@ -127,7 +127,9 @@ export default function ResumeBuilder() {
   };
 
   if (viewMode === "preview" && resumeData) {
-    return <ResumePreviewPage resumeData={resumeData} />;
+    return (
+      <ResumePreviewPage resumeData={resumeData} setViewMode={setViewMode} />
+    );
   }
 
   return (
