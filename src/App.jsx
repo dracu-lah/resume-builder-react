@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -15,6 +17,8 @@ export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
   const [resumeData, setResumeData] = useState(null);
 
+  const contentRef = useRef(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
   const {
     control,
     handleSubmit,
@@ -119,6 +123,7 @@ export default function ResumeBuilder() {
 
   const ResumePreview = ({ data }) => (
     <div
+      ref={contentRef}
       className="bg-white p-8 max-w-4xl mx-auto text-black"
       style={{
         fontFamily: "Arial, sans-serif",
@@ -343,7 +348,7 @@ export default function ResumeBuilder() {
               <Edit className="h-4 w-4 mr-2" />
               Edit Resume
             </Button>
-            <Button onClick={() => window.print()}>
+            <Button onClick={reactToPrintFn}>
               <Download className="h-4 w-4 mr-2" />
               Download PDF
             </Button>
