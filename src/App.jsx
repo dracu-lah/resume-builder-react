@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ResumePreviewPage from "@/pages/resume-preview";
-import ResumeForm from "./ResumeForm";
+import ResumeFormPage from "@/pages/resume-form";
 
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -12,5 +12,7 @@ export default function ResumeBuilder() {
     );
   }
 
-  return <ResumeForm setResumeData={setResumeData} setViewMode={setViewMode} />;
+  return (
+    <ResumeFormPage setResumeData={setResumeData} setViewMode={setViewMode} />
+  );
 }

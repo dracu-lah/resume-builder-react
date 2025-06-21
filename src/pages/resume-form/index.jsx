@@ -11,13 +11,13 @@ import { Plus, Minus, Eye } from "lucide-react";
 import { sampleData } from "./sampleData";
 import { defaultValues, resumeSchema } from "./resumeSchema";
 import { ModeToggle } from "@/components/shared/ModeToggle";
-import JSONFileUpload from "@/ResumeForm/components/JSONFileUpload";
+import JSONFileUpload from "@/pages/resume-form/components/JSONFileUpload";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import ArrayFormField from "@/components/FormElements/ArrayFormField";
 import { Form } from "@/components/ui/form";
 import BasicFormField from "@/components/FormElements/BasicFormField";
 import TextAreaFormField from "@/components/FormElements/TextAreaFormField";
-const ResumeForm = ({ setResumeData, setViewMode }) => {
+const ResumeFormPage = ({ setResumeData, setViewMode }) => {
   const form = useForm({
     resolver: zodResolver(resumeSchema),
     defaultValues,
@@ -635,4 +635,4 @@ const ResumeForm = ({ setResumeData, setViewMode }) => {
   );
 };
 
-export default ResumeForm;
+export default ResumeFormPage;
