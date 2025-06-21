@@ -20,7 +20,6 @@ export const useAutoSave = (control, saveFunction, delay = 2000) => {
     // Set new timeout for auto-save
     timeoutRef.current = setTimeout(() => {
       saveFunction(watchedValues);
-      console.log("✅ Form auto-saved:", watchedValues);
     }, delay);
 
     // Cleanup timeout on unmount

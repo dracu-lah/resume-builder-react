@@ -79,7 +79,6 @@ export default function ResumeBuilder() {
   const saveToLocal = () => {
     if (watch() && watch().personalInfo.name !== "") {
       localStorage.setItem("resumeData", JSON.stringify(watch()));
-      toast.info("Auto Saved");
     }
   };
   useAutoSave(control, saveToLocal, 2000);
