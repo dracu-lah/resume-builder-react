@@ -92,7 +92,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           EXPERIENCE
         </h2>
         {data.experience.map((exp, index) => (
-          <div key={index} className="mb-4">
+          <div key={index} className="mb-4 ">
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-bold" style={{ fontSize: "12pt" }}>
                 {exp.company}
@@ -202,7 +202,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             PROJECTS
           </h2>
           {data.projects.map((project, index) => (
-            <div key={index} className="mb-4">
+            <div key={index} className="mb-4 resume-section">
               <h3 className="font-bold" style={{ fontSize: "12pt" }}>
                 {project.name}
               </h3>
