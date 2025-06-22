@@ -223,6 +223,9 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
 
                                         <span className="text-sm text-red-400">
                                           {errors &&
+                                            errors?.experience &&
+                                            errors?.experience[index]
+                                              ?.achievements[achIndex] &&
                                             errors?.experience[index]
                                               ?.achievements[achIndex]?.message}
                                         </span>
@@ -471,16 +474,17 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                 <div className="space-y-2">
                                   {value.map((tech, techIndex) => (
                                     <div key={techIndex} className="flex gap-2">
-                                      <Input
-                                        value={tech}
-                                        onChange={(e) => {
-                                          const newTech = [...value];
-                                          newTech[techIndex] = e.target.value;
-                                          onChange(newTech);
-                                        }}
-                                        placeholder="e.g. React.js"
-                                        className="flex-1"
-                                      />
+                                      <div className="flex-1">
+                                        <Input
+                                          value={tech}
+                                          onChange={(e) => {
+                                            const newTech = [...value];
+                                            newTech[techIndex] = e.target.value;
+                                            onChange(newTech);
+                                          }}
+                                          placeholder="e.g. React.js"
+                                        />
+                                      </div>
                                       {value.length > 1 && (
                                         <Button
                                           type="button"
