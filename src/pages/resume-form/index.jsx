@@ -19,6 +19,10 @@ import BasicFormField from "@/components/FormElements/BasicFormField";
 import TextAreaFormField from "@/components/FormElements/TextAreaFormField";
 import { LoaderPinwheelIcon } from "lucide-react";
 import GithubButton from "@/components/shared/GithubButton";
+import { ChevronsUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { ChevronUp } from "lucide-react";
+import { ChevronsDown } from "lucide-react";
 const ResumeFormPage = ({ setResumeData, setViewMode }) => {
   const form = useForm({
     resolver: zodResolver(resumeSchema),
@@ -33,7 +37,6 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
     watch,
     reset,
   } = form;
-  console.log("errors", errors);
   const experienceFields = useFieldArray({ control, name: "experience" });
   const educationFields = useFieldArray({ control, name: "education" });
   const projectFields = useFieldArray({ control, name: "projects" });
@@ -592,16 +595,83 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                               />
                             </div>
 
-                            {projectFields.fields.length > 1 && (
-                              <Button
-                                type="button"
-                                variant="destructive"
-                                size="sm"
-                                onClick={() => projectFields.remove(index)}
-                              >
-                                Remove Project
-                              </Button>
-                            )}
+                            <div className="flex gap-2 flex-wrap">
+                              {/* Move Controls */}
+                              {projectFields.fields.length > 1 && (
+                                <div className="flex gap-1">
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    disabled={index === 0}
+                                    onClick={() => {
+                                      const currentProject =
+                                        projectFields.fields[index];
+                                      projectFields.remove(index);
+                                      projectFields.insert(0, currentProject);
+                                    }}
+                                    title="Move to top"
+                                  >
+                                    <ChevronsUp className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    disabled={index === 0}
+                                    onClick={() => {
+                                      projectFields.move(index, index - 1);
+                                    }}
+                                    title="Move up"
+                                  >
+                                    <ChevronUp className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    disabled={
+                                      index === projectFields.fields.length - 1
+                                    }
+                                    onClick={() => {
+                                      projectFields.move(index, index + 1);
+                                    }}
+                                    title="Move down"
+                                  >
+                                    <ChevronDown className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    disabled={
+                                      index === projectFields.fields.length - 1
+                                    }
+                                    onClick={() => {
+                                      const currentProject =
+                                        projectFields.fields[index];
+                                      projectFields.remove(index);
+                                      projectFields.append(currentProject);
+                                    }}
+                                    title="Move to bottom"
+                                  >
+                                    <ChevronsDown className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              )}
+
+                              {/* Remove Button */}
+                              {projectFields.fields.length > 1 && (
+                                <Button
+                                  type="button"
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => projectFields.remove(index)}
+                                >
+                                  Remove Project
+                                </Button>
+                              )}
+                            </div>
                           </CardContent>
                         </Card>
                       ))}
