@@ -123,7 +123,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       </div>
 
       {/* Technical Skills */}
-      <div className="mb-6 resume-section">
+      <div className="mb-6 ">
         <h2
           className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
           style={{ fontSize: "14pt" }}
@@ -176,22 +176,6 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
         </div>
       </div>
 
-      {/* Education */}
-      <div className="mb-6 resume-section">
-        <h2
-          className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
-          style={{ fontSize: "14pt" }}
-        >
-          EDUCATION
-        </h2>
-        {data.education.map((edu, index) => (
-          <div key={index} className="mb-2" style={{ fontSize: "11pt" }}>
-            <div className="font-bold">{edu.degree}</div>
-            <div>{edu.institution}</div>
-          </div>
-        ))}
-      </div>
-
       {/* Projects */}
       {data.projects && data.projects.length > 0 && (
         <div className="mb-6 ">
@@ -229,6 +213,21 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
         </div>
       )}
 
+      {/* Education */}
+      <div className="mb-6 resume-section">
+        <h2
+          className="text-lg font-bold mb-3 pb-1 border-b border-gray-300"
+          style={{ fontSize: "14pt" }}
+        >
+          EDUCATION
+        </h2>
+        {data.education.map((edu, index) => (
+          <div key={index} className="mb-2" style={{ fontSize: "11pt" }}>
+            <div className="font-bold">{edu.degree}</div>
+            <div>{edu.institution}</div>
+          </div>
+        ))}
+      </div>
       {/* Achievements */}
       {data.achievements.filter(Boolean).length > 0 && (
         <div className="mb-6 resume-section">
