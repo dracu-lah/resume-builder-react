@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Minus } from "lucide-react";
 import BasicFormField from "@/components/FormElements/BasicFormField";
 import TextAreaFormField from "@/components/FormElements/TextAreaFormField";
+import { useForm, useFormContext } from "react-hook-form";
 
 const ArrayFieldComponent = ({
   fields,
@@ -13,6 +14,10 @@ const ArrayFieldComponent = ({
   type = "input",
   rows = 3,
 }) => {
+  const {
+    formState: { errors },
+  } = useFormContext();
+  console.log("erros", errors);
   return (
     <div key={name} className="space-y-2">
       <span className="text-sm font-medium">{label}</span>

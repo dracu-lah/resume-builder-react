@@ -31,6 +31,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
     watch,
     reset,
   } = form;
+  console.log("errors", errors);
   const experienceFields = useFieldArray({ control, name: "experience" });
   const educationFields = useFieldArray({ control, name: "education" });
   const projectFields = useFieldArray({ control, name: "projects" });
@@ -207,18 +208,25 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                 <div className="space-y-2">
                                   {value.map((achievement, achIndex) => (
                                     <div key={achIndex} className="flex gap-2">
-                                      <Textarea
-                                        value={achievement}
-                                        onChange={(e) => {
-                                          const newAchievements = [...value];
-                                          newAchievements[achIndex] =
-                                            e.target.value;
-                                          onChange(newAchievements);
-                                        }}
-                                        placeholder="Describe a key achievement with metrics if possible..."
-                                        rows={2}
-                                        className="flex-1"
-                                      />
+                                      <div className="flex-1">
+                                        <Textarea
+                                          value={achievement}
+                                          onChange={(e) => {
+                                            const newAchievements = [...value];
+                                            newAchievements[achIndex] =
+                                              e.target.value;
+                                            onChange(newAchievements);
+                                          }}
+                                          placeholder="Describe a key achievement with metrics if possible..."
+                                          rows={2}
+                                        />
+
+                                        <span className="text-sm text-red-400">
+                                          {errors &&
+                                            errors?.experience[index]
+                                              ?.achievements[achIndex]?.message}
+                                        </span>
+                                      </div>
                                       {value.length > 1 && (
                                         <Button
                                           type="button"
