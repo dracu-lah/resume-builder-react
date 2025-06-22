@@ -19,15 +19,6 @@ export const sampleData = {
         "Enhanced page performance using lazy loading.",
       ],
     },
-    {
-      company: "XYZ Innovations",
-      position: "Intern Developer",
-      duration: "Jul 2023 - Dec 2023",
-      achievements: [
-        "Assisted in frontend bug fixing.",
-        "Built simple UI modules using HTML/CSS.",
-      ],
-    },
   ],
   skills: {
     languages: ["JavaScript", "HTML", "CSS"],
@@ -52,13 +43,6 @@ export const sampleData = {
       description: "Simple task tracking app with drag-and-drop support.",
       technologies: ["ReactJS", "Tailwind CSS"],
       features: ["Task Creation", "Status Update"],
-    },
-    {
-      name: "Food Order App",
-      role: "Frontend Developer",
-      description: "Basic food ordering UI for restaurants.",
-      technologies: ["ReactJS"],
-      features: ["Menu Display", "Order Cart"],
     },
   ],
   achievements: [
