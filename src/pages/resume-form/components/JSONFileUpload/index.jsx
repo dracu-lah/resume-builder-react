@@ -117,7 +117,7 @@ export default function ResumeUploadModal({ onUpload }) {
       <DialogTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <Upload className="h-4 w-4" />
-          Sample Data From JSON
+          Upload Resume(JSON)
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">

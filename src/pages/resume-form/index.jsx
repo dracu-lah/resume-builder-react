@@ -23,6 +23,7 @@ import { ChevronsUp } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { ChevronUp } from "lucide-react";
 import { ChevronsDown } from "lucide-react";
+import OldResumeUpload from "./components/OldResumeUpload";
 const ResumeFormPage = ({ setResumeData, setViewMode }) => {
   const form = useForm({
     resolver: zodResolver(resumeSchema),
@@ -96,19 +97,23 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
           </div>
         </div>
         <div className="flex flex-col gap-4 ">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Button onClick={handleSubmit(onSubmit)}>
               <Eye className="h-4 w-4 mr-2" />
               Generate Resume
             </Button>
+
+            <Button onClick={clear} variant="destructive">
+              Clear
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <JSONFileUpload onUpload={(data) => reset(data)} />
+            <OldResumeUpload onUpload={(data) => reset(data)} />
             <Button onClick={loadSampleData} variant="outline">
               <LoaderPinwheelIcon />
               Load Sample Data
-            </Button>
-
-            <JSONFileUpload onUpload={(data) => reset(data)} />
-            <Button onClick={clear} variant="destructive">
-              Clear
             </Button>
           </div>
           <Form {...form}>
