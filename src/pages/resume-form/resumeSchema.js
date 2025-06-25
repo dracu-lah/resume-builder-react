@@ -5,9 +5,10 @@ export const resumeSchema = z.object({
   personalInfo: z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
     title: z.string().min(2, "Title is required"),
-    phone: z.string().min(10, "Valid phone number required"),
+    phone: z.string().nullable().optional(),
     email: z.string().email("Valid email required"),
     portfolioWebsite: z.string().nullable().optional(),
+    linkedInUrl: z.string().nullable().optional(),
     summary: z.string().min(50, "Summary must be at least 50 characters"),
   }),
   experience: z.array(
@@ -39,6 +40,7 @@ export const resumeSchema = z.object({
   projects: z.array(
     z.object({
       name: z.string().min(2, "Project name required"),
+      link: z.string().nullable().optional(),
       role: z.string().min(2, "Role required"),
       description: z.string().min(20, "Description must be detailed"),
       technologies: z.array(z.string()),
@@ -56,6 +58,8 @@ export const defaultValues = {
     phone: "",
     email: "",
     summary: "",
+    portfolioWebsite: "",
+    linkedInUrl: "",
   },
   experience: [
     {
@@ -84,6 +88,7 @@ export const defaultValues = {
   projects: [
     {
       name: "",
+      link: "",
       role: "",
       description: "",
       technologies: [""],

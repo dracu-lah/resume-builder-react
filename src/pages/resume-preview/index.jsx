@@ -56,14 +56,26 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       className="bg-white   p-8 max-w-4xl resume-container mx-auto text-black"
     >
       {/* Header */}
-      <div className="flex  justify-between mb-6 resume-section">
+      <div className="flex flex-col  justify-between mb-6 resume-section">
         <h1 className="text-2xl font-bold mb-2" style={{ fontSize: "18pt" }}>
           {data.personalInfo.name}
         </h1>
-        <div className="text-sm space-y-1">
-          <div>{data.personalInfo.phone}</div>
+        <div className="text-sm gap-x-4 flex ">
+          {data.personalInfo.phone && <div>{data.personalInfo.phone}</div>}
           <div>{data.personalInfo.email}</div>
-          <div>{data.personalInfo.portfolioWebsite}</div>
+          {data.personalInfo.portfolioWebsite && (
+            <a
+              href={data.personalInfo.portfolioWebsite}
+              className="text-indigo-700"
+            >
+              Portfolio Website
+            </a>
+          )}
+          {data.personalInfo.linkedInUrl && (
+            <a href={data.personalInfo.linkedInUrl} className="text-indigo-700">
+              LinkedIn
+            </a>
+          )}
         </div>
       </div>
 
@@ -189,10 +201,23 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             <div key={index} className="mb-4 resume-section">
               <h3 className="font-bold" style={{ fontSize: "12pt" }}>
                 {project.name}
+                {project.link && (
+                  <>
+                    &nbsp;
+                    <a
+                      href={project.link}
+                      className="text-indigo-700 font-normal"
+                    >
+                      Link
+                    </a>
+                  </>
+                )}
               </h3>
-              <p className="font-semibold mb-1" style={{ fontSize: "11pt" }}>
-                Role: {project.role}
-              </p>
+              {project.role && (
+                <p className="font-semibold mb-1" style={{ fontSize: "11pt" }}>
+                  Role: {project.role}
+                </p>
+              )}
               <p className="text-justify mb-2" style={{ fontSize: "10pt" }}>
                 {project.description}
               </p>

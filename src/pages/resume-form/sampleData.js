@@ -5,6 +5,7 @@ export const sampleData = {
     phone: "+911234567890",
     email: "john.doe@example.com",
     portfolioWebsite: "https://johndoe.dev",
+    linkedInUrl: "https://www.linkedin.com/in/johndoe",
     summary:
       "Frontend developer with a passion for building interactive and responsive web interfaces. Skilled in modern JavaScript frameworks and UI/UX best practices.",
   },
@@ -39,6 +40,7 @@ export const sampleData = {
   projects: [
     {
       name: "Task Tracker",
+      link: "https://tasktracker.dev",
       role: "Frontend Developer",
       description: "Simple task tracking app with drag-and-drop support.",
       technologies: ["ReactJS", "Tailwind CSS"],

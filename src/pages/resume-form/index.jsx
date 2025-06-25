@@ -154,7 +154,6 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                           name="personalInfo.phone"
                           label="Phone Number"
                           placeholder="+1234567890"
-                          required
                         />
 
                         <BasicFormField
@@ -163,6 +162,11 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                           placeholder="personalwebsite.me"
                         />
 
+                        <BasicFormField
+                          name="personalInfo.linkedInUrl"
+                          label="LinkedIn"
+                          placeholder="https://www.linkedin.com/in/johndoe"
+                        />
                         <BasicFormField
                           name="personalInfo.email"
                           label="Email Address"
@@ -483,6 +487,13 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                               />
                             </div>
 
+                            <BasicFormField
+                              name={`projects.${index}.link`}
+                              label="Project Link"
+                              placeholder="https://tasktracker.dev"
+                              type="text"
+                              className="mb-4"
+                            />
                             <TextAreaFormField
                               name={`projects.${index}.description`}
                               label="Project Description"
