@@ -305,7 +305,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           <DownloadJSONButton data={resumeData} />
         </div>
       </div>
-      <div className="p-4">
+      <div className="p-4 overflow-scroll">
         <ResumePreview data={resumeData} />
       </div>
     </div>
