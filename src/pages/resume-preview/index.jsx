@@ -63,17 +63,18 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
         <div className="text-sm gap-x-4 flex ">
           {data.personalInfo.phone && <div>{data.personalInfo.phone}</div>}
           <div>{data.personalInfo.email}</div>
+          {data.personalInfo.linkedInUrl && (
+            <a href={data.personalInfo.linkedInUrl} className="text-indigo-700">
+              LinkedIn
+            </a>
+          )}
+
           {data.personalInfo.portfolioWebsite && (
             <a
               href={data.personalInfo.portfolioWebsite}
               className="text-indigo-700"
             >
-              Portfolio Website
-            </a>
-          )}
-          {data.personalInfo.linkedInUrl && (
-            <a href={data.personalInfo.linkedInUrl} className="text-indigo-700">
-              LinkedIn
+              Website
             </a>
           )}
         </div>
