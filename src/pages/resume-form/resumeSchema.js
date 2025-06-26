@@ -41,7 +41,7 @@ export const resumeSchema = z.object({
     z.object({
       name: z.string().min(2, "Project name required"),
       link: z.string().nullable().optional(),
-      role: z.string().min(2, "Role required"),
+      role: z.string().nullable().optional(),
       description: z.string().min(20, "Description must be detailed"),
       technologies: z.array(z.string()),
       features: z.array(z.string()),
