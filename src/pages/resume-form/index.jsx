@@ -97,7 +97,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
           </div>
         </div>
         <div className="flex flex-col gap-4 ">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <Button onClick={handleSubmit(onSubmit)}>
               <Eye className="h-4 w-4 mr-2" />
               Generate Resume
@@ -110,16 +110,16 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <JSONFileUpload onUpload={(data) => reset(data)} />
-            <OldResumeUpload onUpload={(data) => reset(data)} />
             <Button onClick={loadSampleData} variant="outline">
               <LoaderPinwheelIcon />
               Load Sample Data
             </Button>
+            <OldResumeUpload onUpload={(data) => reset(data)} />
           </div>
           <Form {...form}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <Tabs defaultValue="personal" className="space-y-4">
-                <TabsList className="grid w-full grid-cols-1 md:grid-cols-6 min-h-[400px] md:min-h-full">
+                <TabsList className="hidden sm:grid w-full grid-cols-1 sm:grid-cols-6 min-h-[400px] md:min-h-full">
                   <TabsTrigger value="personal">Personal</TabsTrigger>
                   <TabsTrigger value="experience">Experience</TabsTrigger>
                   <TabsTrigger value="skills">Skills</TabsTrigger>
