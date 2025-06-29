@@ -119,7 +119,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
           <Form {...form}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <Tabs defaultValue="personal" className="space-y-4">
-                <TabsList className="hidden sm:grid w-full grid-cols-1 sm:grid-cols-6 min-h-[400px] md:min-h-full">
+                <TabsList className="grid w-full grid-cols-1 sm:grid-cols-6 min-h-[400px] md:min-h-full">
                   <TabsTrigger value="personal">Personal</TabsTrigger>
                   <TabsTrigger value="experience">Experience</TabsTrigger>
                   <TabsTrigger value="skills">Skills</TabsTrigger>
@@ -149,7 +149,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                         required
                       />
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid sm:grid-cols-2 gap-4">
                         <BasicFormField
                           name="personalInfo.phone"
                           label="Phone Number"
@@ -197,7 +197,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                       {experienceFields.fields.map((field, index) => (
                         <Card key={field.id} className="mb-4">
                           <CardContent className="pt-6">
-                            <div className="grid grid-cols-2 gap-4 mb-4">
+                            <div className="grid sm:grid-cols-2 gap-4 mb-4">
                               <BasicFormField
                                 name={`experience.${index}.company`}
                                 label="Company Name"
@@ -408,7 +408,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                       {educationFields.fields.map((field, index) => (
                         <Card key={field.id} className="mb-4">
                           <CardContent className="pt-6">
-                            <div className="grid grid-cols-2 gap-4 mb-4">
+                            <div className="grid sm:grid-cols-2 gap-4 mb-4">
                               <BasicFormField
                                 name={`education.${index}.degree`}
                                 label="Degree"
@@ -472,7 +472,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                       {projectFields.fields.map((field, index) => (
                         <Card key={field.id} className="mb-4">
                           <CardContent className="pt-6">
-                            <div className="grid grid-cols-2 gap-4 mb-4">
+                            <div className="grid sm:grid-cols-2 gap-4 mb-4">
                               <BasicFormField
                                 name={`projects.${index}.name`}
                                 label="Project Name"
