@@ -1,18 +1,13 @@
-import { useState } from "react";
-import ResumePreviewPage from "@/pages/resume-preview";
-import ResumeFormPage from "@/pages/resume-form";
+import ResumeBuilder from "./components/ResumeBuilder";
+import Footer from "./components/shared/Footer";
 
-export default function ResumeBuilder() {
-  const [viewMode, setViewMode] = useState("edit");
-  const [resumeData, setResumeData] = useState(null);
-
-  if (viewMode === "preview" && resumeData) {
-    return (
-      <ResumePreviewPage resumeData={resumeData} setViewMode={setViewMode} />
-    );
-  }
-
+const App = () => {
   return (
-    <ResumeFormPage setResumeData={setResumeData} setViewMode={setViewMode} />
+    <div>
+      <ResumeBuilder />
+      <Footer />
+    </div>
   );
-}
+};
+
+export default App;

@@ -2,7 +2,7 @@ import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Edit } from "lucide-react";
-import { DownloadJSONButton } from "@/components/DownloadJSONButton";
+import { DownloadJSONButton } from "@/components/ResumeBuilder/components/DownloadJSONButton";
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({

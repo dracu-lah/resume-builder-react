@@ -11,7 +11,7 @@ import { Plus, Minus, Eye } from "lucide-react";
 import { sampleData } from "./sampleData";
 import { defaultValues, resumeSchema } from "./resumeSchema";
 import { ModeToggle } from "@/components/shared/ModeToggle";
-import JSONFileUpload from "@/pages/resume-form/components/JSONFileUpload";
+import JSONFileUpload from "./components/JSONFileUpload";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import ArrayFormField from "@/components/FormElements/ArrayFormField";
 import { Form } from "@/components/ui/form";

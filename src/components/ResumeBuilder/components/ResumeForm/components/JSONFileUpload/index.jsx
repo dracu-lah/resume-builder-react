@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,10 +18,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Upload, FileText, CheckCircle, XCircle } from "lucide-react";
-import { sampleData } from "../../sampleData";
 import { defaultValues, resumeSchema } from "../../resumeSchema";
 import { z } from "zod";
-import { DownloadJSONButton } from "../../../../components/DownloadJSONButton";
+import { DownloadJSONButton } from "@/components/ResumeBuilder/components/DownloadJSONButton";
 
 export default function ResumeUploadModal({ onUpload }) {
   const [uploadedData, setUploadedData] = useState(null);
