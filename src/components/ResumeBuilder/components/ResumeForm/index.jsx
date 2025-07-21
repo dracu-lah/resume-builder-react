@@ -62,8 +62,16 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
   useEffect(() => {
     const savedData = localStorage.getItem("resumeData");
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      reset(parsedData);
+      try {
+        const parsedData = JSON.parse(savedData);
+        const result = resumeSchema.safeParse(parsedData);
+
+        if (result.success) {
+          reset(result.data);
+        }
+      } catch (error) {
+        console.error("Failed to parse resume data:", error);
+      }
     }
   }, [reset]);
 
