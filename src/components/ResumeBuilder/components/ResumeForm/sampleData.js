@@ -4,8 +4,8 @@ export const sampleData = {
     title: "Frontend Developer",
     phone: "+911234567890",
     email: "john.doe@example.com",
-    portfolioWebsite: "https://johndoe.dev",
-    linkedInUrl: "https://www.linkedin.com/in/johndoe",
+    portfolioWebsite: "johndoe.dev",
+    linkedInUrl: "linkedin.com/in/johndoe",
     summary:
       "Frontend developer with a passion for building interactive and responsive web interfaces. Skilled in modern JavaScript frameworks and UI/UX best practices.",
   },
