@@ -197,100 +197,172 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                       {experienceFields.fields.map((field, index) => (
                         <Card key={field.id} className="mb-4">
                           <CardContent className="pt-6">
-                            <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div className="grid sm:grid-cols-1 gap-4 mb-4">
                               <BasicFormField
                                 name={`experience.${index}.company`}
                                 label="Company Name"
                                 placeholder="Company name"
                                 required
                               />
-
-                              <BasicFormField
-                                name={`experience.${index}.position`}
-                                label="Position"
-                                placeholder="Your position"
-                                required
-                              />
                             </div>
 
-                            <BasicFormField
-                              name={`experience.${index}.duration`}
-                              label="Duration"
-                              placeholder="e.g. Jan 2020 - Present"
-                              required
-                              className="mb-4"
-                            />
-
-                            <div>
-                              <label className="block text-sm font-medium mb-1">
-                                Key Achievements
-                              </label>
-                              <Controller
-                                control={control}
-                                name={`experience.${index}.achievements`}
-                                render={({ field: { value, onChange } }) => (
-                                  <div className="space-y-2">
-                                    {value.map((achievement, achIndex) => (
-                                      <div
-                                        key={achIndex}
-                                        className="flex gap-2"
-                                      >
-                                        <div className="flex-1">
-                                          <Textarea
-                                            value={achievement}
-                                            onChange={(e) => {
-                                              const newAchievements = [
-                                                ...value,
-                                              ];
-                                              newAchievements[achIndex] =
-                                                e.target.value;
-                                              onChange(newAchievements);
-                                            }}
-                                            placeholder="Describe a key achievement with metrics if possible..."
-                                            rows={2}
-                                          />
-
-                                          <span className="text-sm text-red-400">
-                                            {errors &&
-                                              errors?.experience &&
-                                              errors?.experience[index]
-                                                ?.achievements[achIndex] &&
-                                              errors?.experience[index]
-                                                ?.achievements[achIndex]
-                                                ?.message}
-                                          </span>
-                                        </div>
-                                        {value.length > 1 && (
-                                          <Button
-                                            type="button"
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => {
-                                              const newAchievements =
-                                                value.filter(
-                                                  (_, i) => i !== achIndex,
-                                                );
-                                              onChange(newAchievements);
-                                            }}
-                                          >
-                                            <Minus className="h-4 w-4" />
-                                          </Button>
-                                        )}
-                                      </div>
-                                    ))}
-                                    <Button
-                                      type="button"
-                                      variant="outline"
-                                      size="sm"
-                                      onClick={() => onChange([...value, ""])}
+                            <Controller
+                              control={control}
+                              name={`experience.${index}.positions`}
+                              render={({ field: { value, onChange } }) => (
+                                <div className="space-y-4">
+                                  {value.map((position, posIndex) => (
+                                    <div
+                                      key={posIndex}
+                                      className="border rounded-lg p-4"
                                     >
-                                      <Plus className="h-4 w-4 mr-2" />
-                                      Add Achievement
-                                    </Button>
-                                  </div>
-                                )}
-                              />
-                            </div>
+                                      <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                                        <BasicFormField
+                                          name={`experience.${index}.positions.${posIndex}.title`}
+                                          label="Position Title"
+                                          placeholder="Your position"
+                                          required
+                                        />
+
+                                        <BasicFormField
+                                          name={`experience.${index}.positions.${posIndex}.duration`}
+                                          label="Duration"
+                                          placeholder="e.g. Jan 2020 - Present"
+                                          required
+                                        />
+                                      </div>
+
+                                      <div>
+                                        <label className="block text-sm font-medium mb-1">
+                                          Key Achievements
+                                        </label>
+                                        <Controller
+                                          control={control}
+                                          name={`experience.${index}.positions.${posIndex}.achievements`}
+                                          render={({
+                                            field: {
+                                              value: achievements,
+                                              onChange: onAchievementsChange,
+                                            },
+                                          }) => (
+                                            <div className="space-y-2">
+                                              {achievements.map(
+                                                (achievement, achIndex) => (
+                                                  <div
+                                                    key={achIndex}
+                                                    className="flex gap-2"
+                                                  >
+                                                    <div className="flex-1">
+                                                      <Textarea
+                                                        value={achievement}
+                                                        onChange={(e) => {
+                                                          const newAchievements =
+                                                            [...achievements];
+                                                          newAchievements[
+                                                            achIndex
+                                                          ] = e.target.value;
+                                                          onAchievementsChange(
+                                                            newAchievements,
+                                                          );
+                                                        }}
+                                                        placeholder="Describe a key achievement with metrics if possible..."
+                                                        rows={2}
+                                                      />
+
+                                                      <span className="text-sm text-red-400">
+                                                        {
+                                                          errors?.experience?.[
+                                                            index
+                                                          ]?.positions?.[
+                                                            posIndex
+                                                          ]?.achievements?.[
+                                                            achIndex
+                                                          ]?.message
+                                                        }
+                                                      </span>
+                                                    </div>
+                                                    {achievements.length >
+                                                      1 && (
+                                                      <Button
+                                                        type="button"
+                                                        variant="outline"
+                                                        size="sm"
+                                                        onClick={() => {
+                                                          const newAchievements =
+                                                            achievements.filter(
+                                                              (_, i) =>
+                                                                i !== achIndex,
+                                                            );
+                                                          onAchievementsChange(
+                                                            newAchievements,
+                                                          );
+                                                        }}
+                                                      >
+                                                        <Minus className="h-4 w-4" />
+                                                      </Button>
+                                                    )}
+                                                  </div>
+                                                ),
+                                              )}
+                                              <Button
+                                                type="button"
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() =>
+                                                  onAchievementsChange([
+                                                    ...achievements,
+                                                    "",
+                                                  ])
+                                                }
+                                              >
+                                                <Plus className="h-4 w-4 mr-2" />
+                                                Add Achievement
+                                              </Button>
+                                            </div>
+                                          )}
+                                        />
+                                      </div>
+
+                                      {value.length > 1 && (
+                                        <Button
+                                          type="button"
+                                          variant="destructive"
+                                          size="sm"
+                                          onClick={() => {
+                                            const newPositions = value.filter(
+                                              (_, i) => i !== posIndex,
+                                            );
+                                            onChange(newPositions);
+                                          }}
+                                          className="mt-4"
+                                        >
+                                          Remove Position
+                                        </Button>
+                                      )}
+                                    </div>
+                                  ))}
+
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                      onChange([
+                                        ...value,
+                                        {
+                                          title: "",
+                                          duration: "",
+                                          achievements: [""],
+                                        },
+                                      ])
+                                    }
+                                  >
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Add Position
+                                  </Button>
+                                </div>
+                              )}
+                            />
 
                             {experienceFields.fields.length > 1 && (
                               <Button
@@ -300,7 +372,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                 onClick={() => experienceFields.remove(index)}
                                 className="mt-4"
                               >
-                                Remove Experience
+                                Remove Company
                               </Button>
                             )}
                           </CardContent>

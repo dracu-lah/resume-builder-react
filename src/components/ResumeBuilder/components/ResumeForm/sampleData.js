@@ -12,23 +12,50 @@ export const sampleData = {
   experience: [
     {
       company: "ABC Tech Solutions",
-      position: "Frontend Developer",
-      duration: "Jan 2024 - Present",
-      achievements: [
-        "Developed reusable React components.",
-        "Collaborated with backend for seamless API integration.",
-        "Enhanced page performance using lazy loading.",
+      positions: [
+        {
+          title: "Senior Frontend Developer",
+          duration: "Jan 2024 - Present",
+          achievements: [
+            "Led migration from class components to functional components with hooks",
+            "Architected micro-frontend solution for large-scale application",
+            "Mentored junior developers in React best practices",
+          ],
+        },
+        {
+          title: "Frontend Developer",
+          duration: "Mar 2022 - Dec 2023",
+          achievements: [
+            "Developed reusable React components that reduced development time by 30%",
+            "Collaborated with backend team for seamless API integration",
+            "Enhanced page performance by 40% using lazy loading and code splitting",
+          ],
+        },
+      ],
+    },
+    {
+      company: "XYZ Digital Agency",
+      positions: [
+        {
+          title: "Junior Frontend Developer",
+          duration: "Jun 2020 - Feb 2022",
+          achievements: [
+            "Implemented responsive designs from Figma mockups",
+            "Reduced bundle size by optimizing asset loading",
+            "Contributed to internal component library",
+          ],
+        },
       ],
     },
   ],
   skills: {
-    languages: ["JavaScript", "HTML", "CSS"],
-    frameworks: ["React.js", "Tailwind CSS"],
-    databases: ["Firebase"],
-    architectures: ["Responsive Design", "REST APIs"],
-    tools: ["Git", "VS Code"],
-    methodologies: ["Agile"],
-    other: ["Redux", "React Hook Form"],
+    languages: ["JavaScript", "TypeScript", "HTML", "CSS"],
+    frameworks: ["React.js", "Next.js", "Tailwind CSS"],
+    databases: ["Firebase", "MongoDB"],
+    architectures: ["Responsive Design", "REST APIs", "Micro-frontends"],
+    tools: ["Git", "VS Code", "Figma"],
+    methodologies: ["Agile", "Scrum"],
+    other: ["Redux", "React Query", "React Hook Form"],
   },
   education: [
     {
@@ -39,17 +66,38 @@ export const sampleData = {
   ],
   projects: [
     {
-      name: "Task Tracker",
+      name: "Task Tracker Pro",
       link: "https://tasktracker.dev",
+      role: "Lead Frontend Developer",
+      description:
+        "Advanced task management application with drag-and-drop support, real-time updates, and team collaboration features.",
+      technologies: ["ReactJS", "Tailwind CSS", "Firebase"],
+      features: [
+        "Task Creation",
+        "Status Update",
+        "Team Collaboration",
+        "Analytics Dashboard",
+      ],
+    },
+    {
+      name: "E-commerce Dashboard",
+      link: "https://dashboard.example.com",
       role: "Frontend Developer",
-      description: "Simple task tracking app with drag-and-drop support.",
-      technologies: ["ReactJS", "Tailwind CSS"],
-      features: ["Task Creation", "Status Update"],
+      description:
+        "Analytics dashboard for e-commerce platform showing sales, inventory, and customer metrics.",
+      technologies: ["Next.js", "Chart.js", "Tailwind CSS"],
+      features: ["Data Visualization", "Real-time Updates", "Custom Reporting"],
     },
   ],
   achievements: [
-    "Completed React projects on tight deadlines.",
-    "Contributed to internal UI library.",
+    "Won 'Employee of the Quarter' for outstanding contributions to UI components library",
+    "Reduced page load time by 60% across multiple client projects",
+    "Speaker at React Local Meetup 2023",
   ],
-  interests: ["UI Design", "Open Source", "Performance Tuning"],
+  interests: [
+    "UI/UX Design",
+    "Open Source Contributions",
+    "Web Performance Optimization",
+    "Technical Writing",
+  ],
 };

@@ -109,32 +109,39 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           EXPERIENCE
         </h2>
         {data.experience.map((exp, index) => (
-          <div key={index} className="mb-4 ">
-            <div className="flex justify-between items-start mb-2">
+          <div key={index} className="mb-4">
+            <div className="flex justify-between items-start mb-1">
               <h3 className="font-bold" style={{ fontSize: "12pt" }}>
                 {exp.company}
               </h3>
-              <span
-                className="text-sm font-medium"
-                style={{ fontSize: "11pt" }}
-              >
-                {exp.duration}
-              </span>
             </div>
-            <h4 className="font-semibold mb-2" style={{ fontSize: "11pt" }}>
-              {exp.position}
-            </h4>
-            <ul className="space-y-1">
-              {exp.achievements.map((achievement, achIndex) => (
-                <li
-                  key={achIndex}
-                  className="text-justify"
-                  style={{ fontSize: "10pt", marginLeft: "15px" }}
-                >
-                  • {achievement}
-                </li>
-              ))}
-            </ul>
+
+            {exp.positions.map((position, posIndex) => (
+              <div key={posIndex} className="ml-4 mb-3">
+                <div className="flex justify-between items-start mb-1">
+                  <h4 className="font-semibold" style={{ fontSize: "11pt" }}>
+                    {position.title}
+                  </h4>
+                  <span
+                    className="text-sm font-medium"
+                    style={{ fontSize: "10pt" }}
+                  >
+                    {position.duration}
+                  </span>
+                </div>
+                <ul className="space-y-1">
+                  {position.achievements.map((achievement, achIndex) => (
+                    <li
+                      key={achIndex}
+                      className="text-justify"
+                      style={{ fontSize: "10pt", marginLeft: "15px" }}
+                    >
+                      • {achievement}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         ))}
       </div>

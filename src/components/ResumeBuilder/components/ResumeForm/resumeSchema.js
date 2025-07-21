@@ -14,10 +14,14 @@ export const resumeSchema = z.object({
   experience: z.array(
     z.object({
       company: z.string().min(2, "Company name required"),
-      position: z.string().min(2, "Position required"),
-      duration: z.string().min(2, "Duration required"),
-      achievements: z.array(
-        z.string().min(10, "Achievement must be descriptive"),
+      positions: z.array(
+        z.object({
+          title: z.string().min(2, "Position title required"),
+          duration: z.string().min(2, "Duration required"),
+          achievements: z.array(
+            z.string().min(10, "Achievement must be descriptive"),
+          ),
+        }),
       ),
     }),
   ),
@@ -64,9 +68,13 @@ export const defaultValues = {
   experience: [
     {
       company: "",
-      position: "",
-      duration: "",
-      achievements: [""],
+      positions: [
+        {
+          title: "",
+          duration: "",
+          achievements: [""],
+        },
+      ],
     },
   ],
   skills: {
