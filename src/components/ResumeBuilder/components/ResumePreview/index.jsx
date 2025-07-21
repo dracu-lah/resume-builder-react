@@ -3,7 +3,11 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Edit } from "lucide-react";
 import { DownloadJSONButton } from "@/components/ResumeBuilder/components/DownloadJSONButton";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
+  const [showLinks, setShowLinks] = useState(false);
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({
     contentRef,
@@ -65,7 +69,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           <div>{data.personalInfo.email}</div>
           {data.personalInfo.linkedInUrl && (
             <a href={data.personalInfo.linkedInUrl} className="text-indigo-700">
-              LinkedIn
+              {showLinks ? "LinkedIn" : data.personalInfo.linkedInUrl}
             </a>
           )}
 
@@ -74,7 +78,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               href={data.personalInfo.portfolioWebsite}
               className="text-indigo-700"
             >
-              Website
+              {showLinks ? "Website" : data.personalInfo.portfolioWebsite}
             </a>
           )}
         </div>
@@ -209,7 +213,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                       href={project.link}
                       className="text-indigo-700 font-normal"
                     >
-                      Link
+                      {showLinks ? "Link" : project.link}
                     </a>
                   </>
                 )}
@@ -307,6 +311,14 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             <Edit className="h-4 w-4 mr-2" />
             Edit Resume
           </Button>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="show-links"
+            checked={showLinks}
+            onCheckedChange={setShowLinks}
+          />
+          <Label htmlFor="show-links">Show Links</Label>
         </div>
       </div>
       <div className="p-4 overflow-scroll">
