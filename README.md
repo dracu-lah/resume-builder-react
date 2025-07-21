@@ -4,9 +4,9 @@ A modern resume builder application designed specifically for developers to crea
 
 ## Features
 
-- 📄 **Resume Upload & Update**: Upload your existing resume (PDF/DOCX) and convert it to editable format
+- 📄 **Resume Upload & Update**: Upload your existing resume (PDF) and convert it to editable format
 - 🔄 **Import/Export**: Save your resume as JSON for easy sharing and future editing
-- ⬇️ **Download Options**: Export your resume in multiple formats (PDF, DOCX)
+- ⬇️ **Download Options**: Export your resume in multiple formats (PDF)
 - 🎨 **Custom Templates**: Choose from developer-friendly resume templates
 - 🔍 **Real-time Preview**: See changes as you edit
 - 🔒 **Local Storage**: Your data stays in your browser
