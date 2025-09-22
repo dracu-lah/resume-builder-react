@@ -4,6 +4,7 @@ export const sampleData = {
     title: "Frontend Developer",
     phone: "+911234567890",
     email: "john.doe@example.com",
+    location: "Thrissur,Kerala",
     portfolioWebsite: "johndoe.dev",
     linkedInUrl: "linkedin.com/in/johndoe",
     summary:
