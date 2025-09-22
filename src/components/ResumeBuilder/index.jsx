@@ -1,5 +1,6 @@
 import { useState } from "react";
-import ResumePreviewPage from "@/components/ResumeBuilder/components/ResumePreview";
+import ResumePreviewPage1 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview1";
+import ResumePreviewPage2 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview2";
 import ResumeFormPage from "@/components/ResumeBuilder/components/ResumeForm";
 
 export default function ResumeBuilder() {
@@ -8,7 +9,10 @@ export default function ResumeBuilder() {
 
   if (viewMode === "preview" && resumeData) {
     return (
-      <ResumePreviewPage resumeData={resumeData} setViewMode={setViewMode} />
+      <>
+        {/* <ResumePreviewPage1 resumeData={resumeData} setViewMode={setViewMode} /> */}
+        <ResumePreviewPage2 resumeData={resumeData} setViewMode={setViewMode} />
+      </>
     );
   }
 

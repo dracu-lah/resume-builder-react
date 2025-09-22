@@ -182,6 +182,13 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                           placeholder="your.email@example.com"
                           required
                         />
+                        <BasicFormField
+                          name="personalInfo.location"
+                          label="Location"
+                          type="text"
+                          placeholder="Thrissur,Kerala"
+                          required
+                        />
                       </div>
 
                       <TextAreaFormField
