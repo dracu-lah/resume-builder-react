@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Upload, FileText, Key, AlertCircle, CheckCircle2 } from "lucide-react";
+import { defaultValues } from "../../resumeSchema";
 
 const pdfSchema = z.object({
   pdfFile: z
@@ -68,54 +69,7 @@ Extract this resume text and return JSON in the following schema. Ensure the out
 { /* ... your JSON ... */ }
 \`\`\`
 
-${JSON.stringify(
-  {
-    personalInfo: {
-      name: "",
-      title: "",
-      phone: "",
-      email: "",
-      summary: "",
-    },
-    experience: [
-      {
-        company: "",
-        position: "",
-        duration: "",
-        achievements: [""],
-      },
-    ],
-    skills: {
-      languages: [""],
-      frameworks: [""],
-      databases: [""],
-      architectures: [""],
-      tools: [""],
-      methodologies: [""],
-      other: [""],
-    },
-    education: [
-      {
-        degree: "",
-        institution: "",
-        year: "",
-      },
-    ],
-    projects: [
-      {
-        name: "",
-        role: "",
-        description: "",
-        technologies: [""],
-        features: [""],
-      },
-    ],
-    achievements: [""],
-    interests: [""],
-  },
-  null,
-  2,
-)}
+${JSON.stringify(defaultValues, null, 2)}
 
 Resume Text:
 ${text}
