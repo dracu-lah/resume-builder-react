@@ -236,14 +236,14 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               style={{ fontSize: "10pt", lineHeight: "1.2" }}
             >
               <div>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="font-bold">- {project.name}</span>:{" "}
-                </a>
-                {project.description}
+                {project.link ? (
+                  <a href={project.link} target="_blank">
+                    <span className="font-bold">- {project.name}</span>
+                  </a>
+                ) : (
+                  <span className="font-bold">- {project.name}</span>
+                )}
+                : {project.description}
               </div>
               {project.technologies?.length > 0 && (
                 <div className="italic">
