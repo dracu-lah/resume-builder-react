@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
+  const [showEducation, setShowEducation] = useState(true);
   const contentRef = useRef(null);
 
   const reactToPrintFn = useReactToPrint({
@@ -73,7 +74,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {showLinks
+              {!showLinks
                 ? "Portfolio"
                 : data.personalInfo.portfolioWebsite.replace(
                     /^https?:\/\//,
@@ -89,7 +90,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {showLinks
+                {!showLinks
                   ? "LinkedIn"
                   : data.personalInfo.linkedInUrl.replace(/^https?:\/\//, "")}
               </a>
@@ -249,19 +250,21 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       )}
 
       {/* Education */}
-      <div className="mb-3">
-        <h2 className="font-bold mb-1" style={{ fontSize: "11pt" }}>
-          EDUCATION
-        </h2>
-        {data.education.map((edu, index) => (
-          <div key={index} style={{ fontSize: "10pt", lineHeight: "1.2" }}>
-            <div>{edu.institution}</div>
-            <div>
-              - {edu.degree} ({edu.year})
+      {showEducation && (
+        <div className="mb-3">
+          <h2 className="font-bold mb-1" style={{ fontSize: "11pt" }}>
+            EDUCATION
+          </h2>
+          {data.education.map((edu, index) => (
+            <div key={index} style={{ fontSize: "10pt", lineHeight: "1.2" }}>
+              <div>{edu.institution}</div>
+              <div>
+                - {edu.degree} ({edu.year})
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Achievements */}
       {data.achievements?.length > 0 && (
@@ -310,13 +313,24 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="show-links"
-            checked={showLinks}
-            onCheckedChange={setShowLinks}
-          />
-          <Label htmlFor="show-links">Show Links</Label>
+        <div className="flex gap-4">
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="show-links"
+              checked={showLinks}
+              onCheckedChange={setShowLinks}
+            />
+            <Label htmlFor="show-links">Show Links</Label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="disable-education"
+              checked={showEducation}
+              onCheckedChange={setShowEducation}
+            />
+            <Label htmlFor="disable-education">Show Education</Label>
+          </div>
         </div>
       </div>
       <div className="p-4 overflow-scroll">
