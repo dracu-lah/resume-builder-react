@@ -236,7 +236,13 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               style={{ fontSize: "10pt", lineHeight: "1.2" }}
             >
               <div>
-                <span className="font-bold">- {project.name}</span>:{" "}
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="font-bold">- {project.name}</span>:{" "}
+                </a>
                 {project.description}
               </div>
               {project.technologies?.length > 0 && (
