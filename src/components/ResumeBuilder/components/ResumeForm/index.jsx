@@ -399,9 +399,14 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                         onClick={() =>
                           experienceFields.append({
                             company: "",
-                            position: "",
-                            duration: "",
-                            achievements: [""],
+                            positions: [
+                              {
+                                title: "",
+                                duration: "",
+                                achievements: [],
+                              },
+                            ],
+                            id: "e95ff1f8-fb02-435e-b668-ffde0c0da3c9",
                           })
                         }
                       >
