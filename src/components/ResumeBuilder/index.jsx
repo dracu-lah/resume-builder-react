@@ -2,6 +2,7 @@ import { useState } from "react";
 import ResumePreviewPage1 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview1";
 import ResumePreviewPage2 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview2";
 import ResumePreviewPage3 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview3";
+import ResumePreviewPage4 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview4";
 import ResumeFormPage from "@/components/ResumeBuilder/components/ResumeForm";
 import { Button } from "../ui/button";
 
@@ -19,6 +20,11 @@ const templates = [
   {
     label: "FAANG Inspired 2 Template",
     template: ResumePreviewPage3,
+  },
+
+  {
+    label: "Vikas Gupta Inspired Template",
+    template: ResumePreviewPage4,
   },
 ];
 export default function ResumeBuilder() {
