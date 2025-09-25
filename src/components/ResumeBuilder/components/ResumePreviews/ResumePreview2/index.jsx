@@ -72,12 +72,12 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           Kerala, India
           <br />
           {data.personalInfo.portfolioWebsite && (
-            <a href={data.personalInfo.portfolioWebsite} className="text-black">
+            <a href={data.personalInfo.portfolioWebsite} className="text-indigo-700">
               {showLinks
                 ? "Portfolio"
                 : data.personalInfo.portfolioWebsite
-                    .replace("https://", "")
-                    .replace("http://", "")}
+                  .replace("https://", "")
+                  .replace("http://", "")}
             </a>
           )}
         </div>
