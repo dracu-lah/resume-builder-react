@@ -6,7 +6,7 @@ export const sampleData = {
     email: "vikas@techedtalk.com",
     location: "Chennai, India",
     portfolioWebsite: "GitHub/ Behance / Dribbble",
-    linkedInUrl: "LinkedIn: Vikas Gupta",
+    linkedInUrl: "https://www.linkedin.com/in/vikasgupta007",
     summary:
       "Experienced Business Analyst and Data Scientist with expertise in machine learning, data analysis, and process improvement. Proven track record in delivering data-driven solutions and enhancing business efficiency through advanced analytics and automation.",
   },
