@@ -15,7 +15,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     pageStyle: `
     @page {
       size: A4;
-      margin: 20mm;
+      margin: 12.7mm;
     }
     
     @media print {
@@ -29,8 +29,16 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
         max-width: none;
         margin: 0;
         padding: 0;
-        font-size: 12px;
-        line-height: 1.4;
+        font-size: 9pt;
+        line-height: 1.2;
+      }
+      
+      /* Ensure borders print properly */
+      .section-border {
+        border-top: 1px solid #000 !important;
+        margin-top: 8px !important;
+        margin-bottom: 0 !important;
+        page-break-inside: avoid;
       }
       
       /* Prevent page breaks in unwanted places */
@@ -58,35 +66,37 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
-      className="bg-white p-8 max-w-4xl resume-container mx-auto text-black"
-      style={{ fontFamily: 'Arial, sans-serif' }}
+      className="bg-white p-2 max-w-4xl resume-container mx-auto text-black"
+      style={{ fontFamily: 'Arial, sans-serif', fontSize: '9pt', lineHeight: '1.2' }}
     >
       {/* Header */}
-      <div className="mb-6 resume-section">
-        <div className="flex justify-between items-start mb-4">
+      <div className="mb-2 resume-section">
+        <div className="flex justify-between items-start mb-2">
           <div>
-            <h1 className="text-3xl font-bold mb-2" style={{ fontSize: "24pt", color: "#000" }}>
+            <h1 className="text-xl font-bold mb-1" style={{ fontSize: "16pt", color: "#000" }}>
               {data.personalInfo.name}
             </h1>
-            <div className="space-y-1" style={{ fontSize: "11pt" }}>
+            <div className="space-y-0.5" style={{ fontSize: "9pt" }}>
               {data.personalInfo.linkedInUrl && (
                 <div>
-                  <span className="font-semibold text-blue-600">LinkedIn:</span>{" "}
-                  <a href={data.personalInfo.linkedInUrl} className="text-blue-600 underline">
-                    {showLinks ? "LinkedIn Profile" : data.personalInfo.linkedInUrl.replace('https://', '')}
+                  <span className="font-semibold text-indigo-700"></span>{" "}
+                  <a href={data.personalInfo.linkedInUrl} className="text-indigo-600  font-semibold">
+                    {!showLinks ? "LinkedIn Profile" : data.personalInfo.linkedInUrl.replace('https://', '')}
                   </a>
                 </div>
               )}
-              {data.personalInfo.portfolioWebsite && (
-                <div>
-                  <span className="font-semibold text-blue-600">GitHub/</span>
-                  <span className="font-semibold text-blue-600"> Behance /</span>
-                  <span className="font-semibold text-blue-600"> Dribbble</span>
-                </div>
-              )}
             </div>
+
+            {data.personalInfo.portfolioWebsite && (
+              <a
+                href={data.personalInfo.portfolioWebsite}
+                className="font-semibold text-indigo-600"
+              >
+                {!showLinks ? "Website" : data.personalInfo.portfolioWebsite}
+              </a>
+            )}
           </div>
-          <div className="text-right space-y-2" style={{ fontSize: "11pt" }}>
+          <div className="text-right space-y-0.5" style={{ fontSize: "9pt" }}>
             <div>
               <span className="font-semibold">Email:</span> {data.personalInfo.email}
             </div>
@@ -97,112 +107,112 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             )}
           </div>
         </div>
-        <hr className="border-t-2 border-black" />
+        <hr className="section-border border-t border-black mt-2" />
       </div>
 
       {/* Education */}
-      <div className="mb-6 resume-section">
+      <div className="mb-2 resume-section">
         <h2
-          className="text-center font-bold mb-4"
-          style={{ fontSize: "14pt", letterSpacing: "2px" }}
+          className="text-center font-bold mb-1"
+          style={{ fontSize: "11pt", letterSpacing: "1px" }}
         >
           EDUCATION
         </h2>
         {data.education.map((edu, index) => (
-          <div key={index} className="flex justify-between items-start mb-3">
-            <div style={{ fontSize: "11pt" }}>
+          <div key={index} className="flex justify-between items-start mb-2">
+            <div style={{ fontSize: "9pt" }}>
               <div className="font-bold">{edu.institution}</div>
-              <div className="mt-1">
+              <div className="mt-0.5">
                 <div>{edu.degree}</div>
                 {edu.gpa && <div>{edu.specialization}; GPA: {edu.gpa}</div>}
               </div>
             </div>
-            <div className="text-right" style={{ fontSize: "11pt" }}>
+            <div className="text-right" style={{ fontSize: "9pt" }}>
               <div>{edu.location}</div>
-              <div className="mt-1">
+              <div className="mt-0.5">
                 <div className="font-semibold">{edu.graduationDate}</div>
                 {edu.additionalInfo && <div>{edu.additionalInfo}</div>}
               </div>
             </div>
           </div>
         ))}
-        <hr className="border-t border-black mt-4" />
+        <hr className="section-border border-t border-black mt-2" />
       </div>
 
       {/* Skills Summary */}
-      <div className="mb-6 resume-section">
+      <div className="mb-2 resume-section">
         <h2
-          className="text-center font-bold mb-4"
-          style={{ fontSize: "14pt", letterSpacing: "2px" }}
+          className="text-center font-bold mb-1"
+          style={{ fontSize: "11pt", letterSpacing: "1px" }}
         >
           SKILLS SUMMARY
         </h2>
-        <div className="space-y-2" style={{ fontSize: "11pt" }}>
+        <div className="space-y-1" style={{ fontSize: "9pt" }}>
           {data.skills.languages.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-32 flex-shrink-0">• Languages:</span>
+              <span className="font-bold w-24 flex-shrink-0">• Languages:</span>
               <span>{data.skills.languages.filter(Boolean).join(", ")}</span>
             </div>
           )}
           {data.skills.frameworks.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-32 flex-shrink-0">• Frameworks:</span>
+              <span className="font-bold w-24 flex-shrink-0">• Frameworks:</span>
               <span>{data.skills.frameworks.filter(Boolean).join(", ")}</span>
             </div>
           )}
           {data.skills.tools.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-32 flex-shrink-0">• Tools:</span>
+              <span className="font-bold w-24 flex-shrink-0">• Tools:</span>
               <span>{data.skills.tools.filter(Boolean).join(", ")}</span>
             </div>
           )}
           {data.skills.databases.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-32 flex-shrink-0">• Platforms:</span>
+              <span className="font-bold w-24 flex-shrink-0">• Platforms:</span>
               <span>{data.skills.databases.filter(Boolean).join(", ")}</span>
             </div>
           )}
           {data.skills.other.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-32 flex-shrink-0">• Soft Skills:</span>
+              <span className="font-bold w-24 flex-shrink-0">• Soft Skills:</span>
               <span>{data.skills.other.filter(Boolean).join(", ")}</span>
             </div>
           )}
         </div>
-        <hr className="border-t border-black mt-4" />
+        <hr className="section-border border-t border-black mt-2" />
       </div>
 
       {/* Work Experience */}
-      <div className="mb-6 resume-section">
+      <div className="mb-2 resume-section">
         <h2
-          className="text-center font-bold mb-4"
-          style={{ fontSize: "14pt", letterSpacing: "2px" }}
+          className="text-center font-bold mb-1"
+          style={{ fontSize: "11pt", letterSpacing: "1px" }}
         >
           WORK EXPERIENCE
         </h2>
         {data.experience.map((exp, index) => (
-          <div key={index} className="mb-4">
+          <div key={index} className="mb-3">
             {exp.positions.map((position, posIndex) => (
-              <div key={posIndex} className="mb-4">
-                <div className="flex justify-between items-start mb-2">
+              <div key={posIndex} className="mb-2">
+                <div className="flex justify-between items-start mb-1">
                   <div>
-                    <span className="font-bold" style={{ fontSize: "12pt" }}>
+                    <span className="font-bold" style={{ fontSize: "10pt" }}>
                       {position.title.toUpperCase()} | {exp.company.toUpperCase()} |
                       {position.link && (
-                        <span className="text-blue-600"> LINK</span>
+                        <span className="text-indigo-600"> LINK</span>
                       )}
                     </span>
                   </div>
-                  <div className="text-right font-semibold" style={{ fontSize: "11pt" }}>
+                  <div className="text-right font-semibold" style={{ fontSize: "9pt" }}>
                     {position.duration}
                   </div>
                 </div>
-                <ul className="space-y-1 ml-4">
+                <ul className="space-y-0.5 ml-3">
                   {position.achievements.map((achievement, achIndex) => (
                     <li
                       key={achIndex}
                       className="text-justify"
-                      style={{ fontSize: "10pt" }}
+                      style={{ fontSize: "8pt" }}
                     >
                       ○ {achievement}
                     </li>
@@ -212,78 +222,86 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             ))}
           </div>
         ))}
-        <hr className="border-t border-black mt-4" />
+        <hr className="section-border border-t border-black mt-2" />
       </div>
 
       {/* Projects */}
       {data.projects && data.projects.length > 0 && (
-        <div className="mb-6 resume-section">
+        <div className="mb-2 resume-section">
           <h2
-            className="text-center font-bold mb-4"
-            style={{ fontSize: "14pt", letterSpacing: "2px" }}
+            className="text-center font-bold mb-1"
+            style={{ fontSize: "11pt", letterSpacing: "1px" }}
           >
             PROJECTS
           </h2>
           {data.projects.map((project, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between items-start mb-2">
+            <div key={index} className="mb-2">
+              <div className="flex justify-between items-start mb-1">
                 <div>
-                  <span className="font-bold" style={{ fontSize: "12pt" }}>
+                  <span className="font-bold" style={{ fontSize: "10pt" }}>
                     {project.name.toUpperCase()}
                     {project.link && (
-                      <span className="text-blue-600"> | LINK</span>
+                      <span className=""> |
+                        &nbsp;
+                        <a
+                          href={project.link}
+                          className="text-indigo-700 "
+                        >
+                          {!showLinks ? "Link" : project.link}
+                        </a>
+                      </span>
                     )}
                   </span>
                 </div>
-                <div className="text-right font-semibold" style={{ fontSize: "11pt" }}>
+                <div className="text-right font-semibold" style={{ fontSize: "9pt" }}>
                   {project.duration || ""}
                 </div>
               </div>
-              <ul className="space-y-1 ml-4">
-                <li className="text-justify" style={{ fontSize: "10pt" }}>
+              <ul className="space-y-0.5 ml-3">
+                <li className="text-justify" style={{ fontSize: "8pt" }}>
                   ○ {project.description}
                 </li>
                 {project.features.filter(Boolean).map((feature, featIndex) => (
                   <li
                     key={featIndex}
                     className="text-justify"
-                    style={{ fontSize: "10pt" }}
+                    style={{ fontSize: "8pt" }}
                   >
                     ○ {feature}
                   </li>
                 ))}
                 {project.technologies.filter(Boolean).length > 0 && (
-                  <li style={{ fontSize: "10pt" }}>
+                  <li style={{ fontSize: "8pt" }}>
                     ○ <strong>Technologies:</strong> {project.technologies.filter(Boolean).join(", ")}
                   </li>
                 )}
               </ul>
             </div>
           ))}
-          <hr className="border-t border-black mt-4" />
+          <hr className="section-border border-t border-black mt-2" />
         </div>
       )}
 
       {/* Certificates */}
       {data.achievements.filter(Boolean).length > 0 && (
-        <div className="mb-6 resume-section">
+        <div className="mb-2 resume-section">
           <h2
-            className="text-center font-bold mb-4"
-            style={{ fontSize: "14pt", letterSpacing: "2px" }}
+            className="text-center font-bold mb-1"
+            style={{ fontSize: "11pt", letterSpacing: "1px" }}
           >
             CERTIFICATES
           </h2>
           {data.achievements.filter(Boolean).map((achievement, index) => (
-            <div key={index} className="flex justify-between items-start mb-2">
-              <div style={{ fontSize: "11pt" }}>
+            <div key={index} className="flex justify-between items-start mb-1">
+              <div style={{ fontSize: "9pt" }}>
                 <div className="font-bold">{achievement.split(' | ')[0]} | CERTIFICATE</div>
-                <ul className="ml-4 mt-1">
-                  <li style={{ fontSize: "10pt" }}>
+                <ul className="ml-3 mt-0.5">
+                  <li style={{ fontSize: "8pt" }}>
                     ○ {achievement.includes('|') ? achievement.split(' | ').slice(1).join(' | ') : 'Certificate details'}
                   </li>
                 </ul>
               </div>
-              <div className="text-right font-semibold" style={{ fontSize: "11pt" }}>
+              <div className="text-right font-semibold" style={{ fontSize: "9pt" }}>
                 {achievement.includes('March 2023') ? 'March 2023' : 'Date'}
               </div>
             </div>
