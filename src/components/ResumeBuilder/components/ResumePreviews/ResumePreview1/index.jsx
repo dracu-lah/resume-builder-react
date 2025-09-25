@@ -69,7 +69,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           <div>{data.personalInfo.email}</div>
           {data.personalInfo.linkedInUrl && (
             <a href={data.personalInfo.linkedInUrl} className="text-indigo-700">
-              {showLinks ? "LinkedIn" : data.personalInfo.linkedInUrl}
+              {!showLinks ? "LinkedIn" : data.personalInfo.linkedInUrl}
             </a>
           )}
 
@@ -78,7 +78,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               href={data.personalInfo.portfolioWebsite}
               className="text-indigo-700"
             >
-              {showLinks ? "Website" : data.personalInfo.portfolioWebsite}
+              {!showLinks ? "Website" : data.personalInfo.portfolioWebsite}
             </a>
           )}
         </div>
@@ -220,7 +220,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                       href={project.link}
                       className="text-indigo-700 font-normal"
                     >
-                      {showLinks ? "Link" : project.link}
+                      {!showLinks ? "Link" : project.link}
                     </a>
                   </>
                 )}
