@@ -57,13 +57,21 @@ const MobileWebViewWarningModal = () => {
     const info = detectEnvironment();
     setDeviceInfo(info);
 
-    // Show modal if on mobile OR in WebView OR Firefox Android
-    if (info.isMobile || info.isWebView || info.isFirefoxAndroid) {
+    // Check if user has previously dismissed the warning
+    const hasBeenDismissed = sessionStorage.getItem('mobileWebViewWarningDismissed');
+
+    // Show modal if on mobile OR in WebView OR Firefox Android, and hasn't been dismissed
+    if ((info.isMobile || info.isWebView || info.isFirefoxAndroid) && !hasBeenDismissed) {
       setShowModal(true);
     }
   }, []);
 
   const handleDismiss = () => {
+    setShowModal(false);
+  };
+
+  const handleDontShowAgain = () => {
+    sessionStorage.setItem('mobileWebViewWarningDismissed', 'true');
     setShowModal(false);
   };
 
@@ -140,10 +148,10 @@ const MobileWebViewWarningModal = () => {
               I'll Try It Anyway
             </Button>
             <Button
-              onClick={() => window.open(window.location.href, '_blank')}
+              onClick={handleDontShowAgain}
               className="flex-1"
             >
-              Open in Browser
+              Don't Show Again
             </Button>
           </div>
         </div>
@@ -159,6 +167,5 @@ const MobileWebViewWarningModal = () => {
     </Dialog>
   );
 };
-
 
 export default MobileWebViewWarningModal;
