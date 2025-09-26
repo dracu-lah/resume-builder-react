@@ -37,7 +37,7 @@ export default function ResumeBuilder() {
       <div className="bg-white dark:bg-zinc-900">
         <div className="p-4 flex flex-col justify-center items-center  gap-2">
           <h1 className="text-xl font-semibold">Available Templates</h1>
-          <div className="flex gap-2">
+          <div className="flex flex-col md:flex-row gap-2 ">
             {templates.map((template) => (
               <Button variant="outline" onClick={() => setTemplate(template)}>
                 {template.label}
