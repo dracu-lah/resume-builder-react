@@ -9,6 +9,8 @@ import { useState } from "react";
 
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
+
+  const [showEducation, setShowEducation] = useState(true);
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({
     contentRef,
@@ -113,33 +115,35 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       </div>
 
       {/* Education */}
-      <div className="mb-2 resume-section">
-        <h2
-          className="text-center font-bold mb-1"
-          style={{ fontSize: "11pt", letterSpacing: "1px" }}
-        >
-          EDUCATION
-        </h2>
-        {data.education.map((edu, index) => (
-          <div key={index} className="flex justify-between items-start mb-2">
-            <div style={{ fontSize: "9pt" }}>
-              <div className="font-bold">{edu.institution}</div>
-              <div className="mt-0.5">
-                <div>{edu.degree}</div>
-                {edu.gpa && <div>{edu.specialization}; GPA: {edu.gpa}</div>}
+      {showEducation &&
+        <div className="mb-2 resume-section">
+          <h2
+            className="text-center font-bold mb-1"
+            style={{ fontSize: "11pt", letterSpacing: "1px" }}
+          >
+            EDUCATION
+          </h2>
+          {data.education.map((edu, index) => (
+            <div key={index} className="flex justify-between items-start mb-2">
+              <div style={{ fontSize: "9pt" }}>
+                <div className="font-bold">{edu.institution}</div>
+                <div className="mt-0.5">
+                  <div>{edu.degree}</div>
+                  {edu.gpa && <div>{edu.specialization}; GPA: {edu.gpa}</div>}
+                </div>
+              </div>
+              <div className="text-right" style={{ fontSize: "9pt" }}>
+                <div>{edu.location}</div>
+                <div className="mt-0.5">
+                  <div className="font-semibold">{edu.graduationDate}</div>
+                  {edu.additionalInfo && <div>{edu.additionalInfo}</div>}
+                </div>
               </div>
             </div>
-            <div className="text-right" style={{ fontSize: "9pt" }}>
-              <div>{edu.location}</div>
-              <div className="mt-0.5">
-                <div className="font-semibold">{edu.graduationDate}</div>
-                {edu.additionalInfo && <div>{edu.additionalInfo}</div>}
-              </div>
-            </div>
-          </div>
-        ))}
-        <hr className="section-border border-t border-black mt-2" />
-      </div>
+          ))}
+          <hr className="section-border border-t border-black mt-2" />
+        </div>
+      }
 
       {/* Skills Summary */}
       <div className="mb-2 resume-section">
@@ -332,13 +336,24 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="show-links"
-            checked={showLinks}
-            onCheckedChange={setShowLinks}
-          />
-          <Label htmlFor="show-links">Show Links</Label>
+        <div className="flex gap-4">
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="show-links"
+              checked={showLinks}
+              onCheckedChange={setShowLinks}
+            />
+            <Label htmlFor="show-links">Show Links</Label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="disable-education"
+              checked={showEducation}
+              onCheckedChange={setShowEducation}
+            />
+            <Label htmlFor="disable-education">Show Education</Label>
+          </div>
         </div>
       </div>
       <div className="p-4 overflow-scroll">
