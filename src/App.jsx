@@ -22,6 +22,10 @@ const App = () => {
             content="https://resumebuilder.js.org/og-image.png"
           />
           <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="google-site-verification"
+            content="TpN31soBLVGpt_EfjwSlb5SLuyVFr4cotUBK0kayTmk"
+          />
         </Helmet>
         <ResumeBuilder />
         <Footer />
