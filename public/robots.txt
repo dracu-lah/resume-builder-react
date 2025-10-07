@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://resumebuilder.js.org/sitemap.xml
