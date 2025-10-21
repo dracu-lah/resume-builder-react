@@ -209,13 +209,13 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                       <CardTitle>Work Experience</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      {experienceFields.fields.map((field, index) => (
+                      {experienceFields.fields.map((field, expIndex) => (
                         <Card key={field.id} className="mb-4">
                           <CardContent className="pt-6">
                             <div className="grid sm:grid-cols-1 gap-4 mb-4">
                               <BasicFormField
-                                name={`experience.${index}.company`}
-                                label="Company Name"
+                                name={`experience.${expIndex}.company`}
+                                label={`Company ${expIndex + 1} Name`}
                                 placeholder="Company name"
                                 required
                               />
@@ -223,7 +223,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
 
                             <Controller
                               control={control}
-                              name={`experience.${index}.positions`}
+                              name={`experience.${expIndex}.positions`}
                               render={({ field: { value, onChange } }) => (
                                 <div className="space-y-4">
                                   {value.map((position, posIndex) => (
@@ -233,14 +233,14 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                     >
                                       <div className="grid sm:grid-cols-2 gap-4 mb-4">
                                         <BasicFormField
-                                          name={`experience.${index}.positions.${posIndex}.title`}
+                                          name={`experience.${expIndex}.positions.${posIndex}.title`}
                                           label="Position Title"
                                           placeholder="Your position"
                                           required
                                         />
 
                                         <BasicFormField
-                                          name={`experience.${index}.positions.${posIndex}.duration`}
+                                          name={`experience.${expIndex}.positions.${posIndex}.duration`}
                                           label="Duration"
                                           placeholder="e.g. Jan 2020 - Present"
                                           required
@@ -253,7 +253,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                         </label>
                                         <Controller
                                           control={control}
-                                          name={`experience.${index}.positions.${posIndex}.achievements`}
+                                          name={`experience.${expIndex}.positions.${posIndex}.achievements`}
                                           render={({
                                             field: {
                                               value: achievements,
@@ -287,7 +287,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                                       <span className="text-sm text-red-400">
                                                         {
                                                           errors?.experience?.[
-                                                            index
+                                                            expIndex
                                                           ]?.positions?.[
                                                             posIndex
                                                           ]?.achievements?.[
@@ -384,7 +384,9 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                 type="button"
                                 variant="destructive"
                                 size="sm"
-                                onClick={() => experienceFields.remove(index)}
+                                onClick={() =>
+                                  experienceFields.remove(expIndex)
+                                }
                                 className="mt-4"
                               >
                                 Remove Company
