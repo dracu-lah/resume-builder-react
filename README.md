@@ -1,5 +1,7 @@
 # Resume Builder for Developers
 
+![Preview](public/og-image.png)
+
 A modern resume builder application designed specifically for developers to create, update, and manage professional resumes with ease.
 
 ## Features
