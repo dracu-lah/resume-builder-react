@@ -1,0 +1,15 @@
+name: PR Checks
+on: [pull_request]
+
+jobs:
+  basic-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Description
+        run: |
+          if [ -z "${{ github.event.pull_request.body }}" ]; then
+            echo "❌ PR description is empty"
+            exit 1
+          else
+            echo "✅ PR has description"
+          fi
