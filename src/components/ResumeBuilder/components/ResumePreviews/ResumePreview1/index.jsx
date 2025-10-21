@@ -1,14 +1,16 @@
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Edit } from "lucide-react";
+import { Download, Edit, FileText } from "lucide-react";
 import { DownloadJSONButton } from "@/components/ResumeBuilder/components/DownloadJSONButton";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
+
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
   const contentRef = useRef(null);
+
   const reactToPrintFn = useReactToPrint({
     contentRef,
     preserveAfterPrint: true,
@@ -47,7 +49,6 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   `,
     documentTitle: "Resume",
     onBeforeGetContent: () => {
-      // Optional: You can modify content before printing
       return Promise.resolve();
     },
     onAfterPrint: () => {
@@ -55,13 +56,71 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     },
     removeAfterPrint: true,
   });
+
+  const downloadToWord = () => {
+    // Get the HTML content from the resume preview
+    const content = contentRef.current;
+
+    // Create a basic HTML structure for Word
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>${resumeData.personalInfo.name} - Resume</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #000;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+          h1 { font-size: 18pt; margin-bottom: 5px; }
+          h2 { 
+            font-size: 14pt; 
+            border-bottom: 1px solid #ccc; 
+            padding-bottom: 3px;
+            margin-top: 15px;
+          }
+          h3 { font-size: 12pt; margin: 8px 0 4px 0; }
+          p, li { font-size: 11pt; }
+          .section { margin-bottom: 15px; }
+          ul { margin: 5px 0; padding-left: 20px; }
+          .contact-info { margin-bottom: 15px; font-size: 11pt; }
+          .date { float: right; font-weight: normal; }
+        </style>
+      </head>
+      <body>
+        ${content.innerHTML}
+      </body>
+      </html>
+    `;
+
+    // Create a Blob with the HTML content
+    const blob = new Blob([htmlContent], { type: "application/msword" });
+
+    // Create download link
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.doc`;
+
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
-      className="bg-white   p-8 max-w-4xl resume-container mx-auto text-black"
+      className="bg-white p-8 max-w-4xl resume-container mx-auto text-black"
     >
       {/* Header */}
-      <div className="flex flex-col  justify-between mb-6 resume-section">
+      <div className="flex flex-col justify-between mb-6 resume-section">
         <h1 className="text-2xl font-bold mb-2" style={{ fontSize: "18pt" }}>
           {data.personalInfo.name}
         </h1>
@@ -301,9 +360,10 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       )}
     </div>
   );
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
-      <div className="sticky top-0 bg-white dark:bg-zinc-900  shadow-sm pb-4 px-4 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="sticky top-0 bg-white dark:bg-zinc-900 shadow-sm pb-4 px-4 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">Default Resume Preview</h1>
 
@@ -312,6 +372,10 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               <Button onClick={reactToPrintFn}>
                 <Download className="h-4 w-4 mr-2" />
                 Download PDF
+              </Button>
+              <Button onClick={downloadToWord} variant="outline">
+                <FileText className="h-4 w-4 mr-2" />
+                Download Word
               </Button>
               <DownloadJSONButton data={resumeData} />
             </div>
