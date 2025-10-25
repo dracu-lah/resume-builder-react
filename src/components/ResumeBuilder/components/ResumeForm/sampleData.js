@@ -12,7 +12,7 @@ export const sampleData = {
   },
   experience: [
     {
-      company: "WS | LINK",
+      company: "WS",
       positions: [
         {
           title: "Business Analyst Intern",
@@ -73,7 +73,7 @@ export const sampleData = {
   projects: [
     {
       name: "Student Performance Prediction",
-      link: "LINK",
+      link: "www.link.website",
       role: "Data Scientist",
       duration: "December 23- February 2024",
       description:
@@ -87,7 +87,7 @@ export const sampleData = {
     },
     {
       name: "Credit Card Fraud Detection",
-      link: "LINK",
+      link: "www.link.website",
       role: "Machine Learning Engineer",
       duration: "September 23- October 2023",
       description:
@@ -101,7 +101,7 @@ export const sampleData = {
     },
     {
       name: "Heart Disease Prediction",
-      link: "LINK",
+      link: "www.link.website",
       role: "Data Scientist",
       duration: "July 23- August 2023",
       description:
