@@ -1,3 +1,7 @@
+// For docx download feature 
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import { saveAs } from "file-saver";
+
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +10,7 @@ import { DownloadJSONButton } from "@/components/ResumeBuilder/components/Downlo
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
+
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
   const contentRef = useRef(null);
@@ -55,6 +60,195 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     },
     removeAfterPrint: true,
   });
+
+
+  // Docx download function
+  const generateWordDocument = (data = {}) => {
+    // Default structure to prevent undefined errors
+    const safeData = {
+      personalInfo: {
+        name: "",
+        phone: "",
+        email: "",
+        linkedInUrl: "",
+        portfolioWebsite: "",
+        title: "",
+        summary: "",
+        ...(data.personalInfo || {}),
+      },
+      experience: data.experience || [],
+      skills: {
+        languages: [],
+        frameworks: [],
+        databases: [],
+        architectures: [],
+        tools: [],
+        methodologies: [],
+        other: [],
+        ...(data.skills || {}),
+      },
+      projects: data.projects || [],
+      education: data.education || [],
+      achievements: data.achievements || [],
+      interests: data.interests || [],
+    };
+
+    // Array to collect ALL paragraph objects for the single document section
+    const documentChildren = [];
+
+    // --- Helpers (remain the same) ---
+    const heading = (text, size = 28) =>
+      new Paragraph({
+        spacing: { after: 100 },
+        children: [new TextRun({ text, bold: true, size })],
+      });
+
+    const textPara = (text, options = {}) =>
+      new Paragraph({
+        spacing: { after: 100 },
+        children: [new TextRun({ text, size: 22, ...options })],
+      });
+    // ----------------------------------
+
+    // === 1. HEADER ===
+    documentChildren.push(
+      new Paragraph({
+        alignment: "center",
+        children: [new TextRun({ text: safeData.personalInfo.name, bold: true, size: 32 })],
+      }),
+      new Paragraph({
+        alignment: "center",
+        children: [
+          new TextRun({
+            text: [
+              safeData.personalInfo.phone,
+              safeData.personalInfo.email,
+              safeData.personalInfo.linkedInUrl,
+              safeData.personalInfo.portfolioWebsite,
+            ]
+              .filter(Boolean)
+              .join(" | "),
+          }),
+        ],
+      }),
+    );
+
+    // === 2. PROFILE SUMMARY ===
+    documentChildren.push(
+      heading("PROFILE SUMMARY"),
+      textPara(safeData.personalInfo.title || ""),
+      textPara(safeData.personalInfo.summary || ""),
+    );
+
+    // === 3. EXPERIENCE ===
+    if (safeData.experience.length) {
+      documentChildren.push(heading("EXPERIENCE"));
+
+      const expParas = safeData.experience.flatMap((exp) => [
+        textPara(exp.company || "", { bold: true }),
+        ...(exp.positions || []).flatMap((pos) => [
+          new Paragraph({
+            spacing: { after: 50 },
+            children: [
+              new TextRun({ text: `${pos.title || ""} `, bold: true }),
+              new TextRun({ text: pos.duration ? `(${pos.duration})` : "" }),
+            ],
+          }),
+          ...(pos.achievements || []).map(
+            (ach) =>
+              new Paragraph({
+                bullet: { level: 0 },
+                children: [new TextRun({ text: ach, size: 20 })],
+              })
+          ),
+        ]),
+      ]);
+      documentChildren.push(...expParas);
+    }
+
+    // === 4. TECHNICAL SKILLS ===
+    const skillCategories = [
+      ["Languages", safeData.skills.languages],
+      ["Frameworks & Libraries", safeData.skills.frameworks],
+      ["Databases", safeData.skills.databases],
+      ["Architectures", safeData.skills.architectures],
+      ["Tools & Platforms", safeData.skills.tools],
+      ["Methodologies", safeData.skills.methodologies],
+      ["Other Skills", safeData.skills.other],
+    ];
+
+    const skillTexts = skillCategories
+      .filter(([_, list]) => list?.filter(Boolean).length > 0)
+      .map(([label, list]) => `${label}: ${list.filter(Boolean).join(", ")}`);
+
+    if (skillTexts.length) {
+      documentChildren.push(heading("TECHNICAL SKILLS"));
+      documentChildren.push(...skillTexts.map((t) => textPara(t)));
+    }
+
+    // === 5. PROJECTS ===
+    if (safeData.projects.length) {
+      documentChildren.push(heading("PROJECTS"));
+
+      const projectParas = safeData.projects.flatMap((p) => [
+        textPara(`${p.name || ""} ${p.link ? `(${p.link})` : ""}`, { bold: true }),
+        ...(p.role ? [textPara(`Role: ${p.role}`)] : []),
+        textPara(p.description || ""),
+        ...(p.technologies?.filter(Boolean).length
+          ? [textPara(`Technologies: ${p.technologies.join(", ")}`)]
+          : []),
+        ...(p.features?.filter(Boolean).length
+          ? [textPara(`Features: ${p.features.join(", ")}`)]
+          : []),
+        new Paragraph(""), // Add a small break between projects
+      ]);
+      documentChildren.push(...projectParas);
+    }
+
+    // === 6. EDUCATION ===
+    if (safeData.education.length) {
+      documentChildren.push(heading("EDUCATION"));
+
+      const eduParas = safeData.education.map((edu) =>
+        textPara(`${edu.degree || ""} — ${edu.institution || ""}`, { bold: true })
+      );
+      documentChildren.push(...eduParas);
+    }
+
+    // === 7. ACHIEVEMENTS ===
+    if (safeData.achievements.filter(Boolean).length > 0) {
+      documentChildren.push(heading("ACHIEVEMENTS AND CERTIFICATES"));
+
+      const achParas = safeData.achievements.filter(Boolean).map(
+        (ach) =>
+          new Paragraph({
+            bullet: { level: 0 },
+            children: [new TextRun({ text: ach, size: 20 })],
+          })
+      );
+      documentChildren.push(...achParas);
+    }
+
+    // === 8. INTERESTS ===
+    if (safeData.interests.filter(Boolean).length > 0) {
+      documentChildren.push(
+        heading("INTERESTS"),
+        textPara(safeData.interests.filter(Boolean).join(", ")),
+      );
+    }
+
+    // === CREATE & DOWNLOAD DOC ===
+    // We create a Document with a single 'section' that contains all content.
+    const doc = new Document({
+      sections: [{ children: documentChildren }]
+    });
+
+    Packer.toBlob(doc).then((blob) => {
+      saveAs(blob, `${safeData.personalInfo.name || "Resume"}.docx`);
+    });
+  };
+
+
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
@@ -314,6 +508,10 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 Download PDF
               </Button>
               <DownloadJSONButton data={resumeData} />
+              <Button onClick={() => generateWordDocument(resumeData)} >
+                <Download className="h-4 w-4 mr-2" />
+                Download DOCX
+              </Button>
             </div>
 
             <Button onClick={() => setViewMode("edit")} variant="outline">
