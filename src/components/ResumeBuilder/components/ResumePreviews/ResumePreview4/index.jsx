@@ -66,26 +66,37 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     removeAfterPrint: true,
   });
 
-
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
       className="bg-white p-2 max-w-4xl resume-container mx-auto text-black"
-      style={{ fontFamily: 'Arial, sans-serif', fontSize: '9pt', lineHeight: '1.2' }}
+      style={{
+        fontFamily: "Arial, sans-serif",
+        fontSize: "9pt",
+        lineHeight: "1.2",
+      }}
     >
       {/* Header */}
       <div className="mb-2 resume-section">
         <div className="flex justify-between items-start mb-2">
           <div>
-            <h1 className="text-xl font-bold mb-1" style={{ fontSize: "16pt", color: "#000" }}>
+            <h1
+              className="text-xl font-bold mb-1"
+              style={{ fontSize: "16pt", color: "#000" }}
+            >
               {data.personalInfo.name}
             </h1>
             <div className="space-y-0.5" style={{ fontSize: "9pt" }}>
               {data.personalInfo.linkedInUrl && (
                 <div>
                   <span className="font-semibold text-indigo-700"></span>{" "}
-                  <a href={data.personalInfo.linkedInUrl} className="text-indigo-600  font-semibold">
-                    {!showLinks ? "LinkedIn Profile" : data.personalInfo.linkedInUrl.replace('https://', '')}
+                  <a
+                    href={data.personalInfo.linkedInUrl}
+                    className="text-indigo-600  font-semibold"
+                  >
+                    {!showLinks
+                      ? "LinkedIn Profile"
+                      : data.personalInfo.linkedInUrl.replace("https://", "")}
                   </a>
                 </div>
               )}
@@ -102,11 +113,13 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           </div>
           <div className="text-right space-y-0.5" style={{ fontSize: "9pt" }}>
             <div>
-              <span className="font-semibold">Email:</span> {data.personalInfo.email}
+              <span className="font-semibold">Email:</span>{" "}
+              {data.personalInfo.email}
             </div>
             {data.personalInfo.phone && (
               <div>
-                <span className="font-semibold">Mobile:</span> {data.personalInfo.phone}
+                <span className="font-semibold">Mobile:</span>{" "}
+                {data.personalInfo.phone}
               </div>
             )}
           </div>
@@ -115,7 +128,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       </div>
 
       {/* Education */}
-      {showEducation &&
+      {showEducation && (
         <div className="mb-2 resume-section">
           <h2
             className="text-center font-bold mb-1"
@@ -129,7 +142,11 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 <div className="font-bold">{edu.institution}</div>
                 <div className="mt-0.5">
                   <div>{edu.degree}</div>
-                  {edu.gpa && <div>{edu.specialization}; GPA: {edu.gpa}</div>}
+                  {edu.gpa && (
+                    <div>
+                      {edu.specialization}; GPA: {edu.gpa}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="text-right" style={{ fontSize: "9pt" }}>
@@ -143,7 +160,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           ))}
           <hr className="section-border border-t border-black mt-2" />
         </div>
-      }
+      )}
 
       {/* Skills Summary */}
       <div className="mb-2 resume-section">
@@ -162,7 +179,9 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           )}
           {data.skills.frameworks.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-24 flex-shrink-0">• Frameworks:</span>
+              <span className="font-bold w-24 flex-shrink-0">
+                • Frameworks:
+              </span>
               <span>{data.skills.frameworks.filter(Boolean).join(", ")}</span>
             </div>
           )}
@@ -180,7 +199,9 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           )}
           {data.skills.other.filter(Boolean).length > 0 && (
             <div className="flex">
-              <span className="font-bold w-24 flex-shrink-0">• Soft Skills:</span>
+              <span className="font-bold w-24 flex-shrink-0">
+                • Soft Skills:
+              </span>
               <span>{data.skills.other.filter(Boolean).join(", ")}</span>
             </div>
           )}
@@ -203,13 +224,17 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 <div className="flex justify-between items-start mb-1">
                   <div>
                     <span className="font-bold" style={{ fontSize: "10pt" }}>
-                      {position.title.toUpperCase()} | {exp.company.toUpperCase()} |
+                      {position.title.toUpperCase()} |{" "}
+                      {exp.company.toUpperCase()} |
                       {position.link && (
                         <span className="text-indigo-600"> LINK</span>
                       )}
                     </span>
                   </div>
-                  <div className="text-right font-semibold" style={{ fontSize: "9pt" }}>
+                  <div
+                    className="text-right font-semibold"
+                    style={{ fontSize: "9pt" }}
+                  >
                     {position.duration}
                   </div>
                 </div>
@@ -247,19 +272,20 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                   <span className="font-bold" style={{ fontSize: "10pt" }}>
                     {project.name.toUpperCase()}
                     {project.link && (
-                      <span className=""> |
-                        &nbsp;
-                        <a
-                          href={project.link}
-                          className="text-indigo-700 "
-                        >
+                      <span className="">
+                        {" "}
+                        | &nbsp;
+                        <a href={project.link} className="text-indigo-700 ">
                           {!showLinks ? "Link" : project.link}
                         </a>
                       </span>
                     )}
                   </span>
                 </div>
-                <div className="text-right font-semibold" style={{ fontSize: "9pt" }}>
+                <div
+                  className="text-right font-semibold"
+                  style={{ fontSize: "9pt" }}
+                >
                   {project.duration || ""}
                 </div>
               </div>
@@ -278,7 +304,8 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 ))}
                 {project.technologies.filter(Boolean).length > 0 && (
                   <li style={{ fontSize: "8pt" }}>
-                    ○ <strong>Technologies:</strong> {project.technologies.filter(Boolean).join(", ")}
+                    ○ <strong>Technologies:</strong>{" "}
+                    {project.technologies.filter(Boolean).join(", ")}
                   </li>
                 )}
               </ul>
@@ -288,27 +315,21 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
         </div>
       )}
 
-      {/* Certificates */}
+      {/* ACHIEVEMENTS AND CERTIFICATES */}
       {data.achievements.filter(Boolean).length > 0 && (
         <div className="mb-2 resume-section">
           <h2
             className="text-center font-bold mb-1"
             style={{ fontSize: "11pt", letterSpacing: "1px" }}
           >
-            CERTIFICATES
+            ACHIEVEMENTS AND CERTIFICATES
           </h2>
           {data.achievements.filter(Boolean).map((achievement, index) => (
             <div key={index} className="flex justify-between items-start mb-1">
               <div style={{ fontSize: "9pt" }}>
-                <div className="font-bold">{achievement.split(' | ')[0]} | CERTIFICATE</div>
                 <ul className="ml-3 mt-0.5">
-                  <li style={{ fontSize: "8pt" }}>
-                    ○ {achievement.includes('|') ? achievement.split(' | ').slice(1).join(' | ') : 'Certificate details'}
-                  </li>
+                  <li style={{ fontSize: "8pt" }}>○ {achievement}</li>
                 </ul>
-              </div>
-              <div className="text-right font-semibold" style={{ fontSize: "9pt" }}>
-                {achievement.includes('March 2023') ? 'March 2023' : 'Date'}
               </div>
             </div>
           ))}

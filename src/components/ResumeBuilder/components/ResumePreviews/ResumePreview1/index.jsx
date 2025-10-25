@@ -266,7 +266,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           </div>
         ))}
       </div>
-      {/* Achievements */}
+      {/* ACHIEVEMENTS AND CERTIFICATES */}
       {data.achievements.filter(Boolean).length > 0 && (
         <div className="mb-6 resume-section">
           <h2
