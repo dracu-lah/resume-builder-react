@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,7 @@ import { useState } from "react";
 
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
-
+  const [isDesignMode, setIsDesignMode] = useState(false);
   const [showEducation, setShowEducation] = useState(true);
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({
@@ -69,6 +70,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
+      contentEditable={isDesignMode}
       className="bg-white p-2 max-w-4xl resume-container mx-auto text-black"
       style={{
         fontFamily: "Arial, sans-serif",
@@ -374,6 +376,20 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               onCheckedChange={setShowEducation}
             />
             <Label htmlFor="disable-education">Show Education</Label>
+          </div>
+
+          <div className="hidden md:flex  items-center space-x-2">
+            <Switch
+              id="design-mode"
+              checked={isDesignMode}
+              onCheckedChange={(e) => {
+                setIsDesignMode(e);
+                if (e) {
+                  toast.info("These changes won't be persisted!");
+                }
+              }}
+            />
+            <Label htmlFor="design-mode">Design Mode</Label>
           </div>
         </div>
       </div>

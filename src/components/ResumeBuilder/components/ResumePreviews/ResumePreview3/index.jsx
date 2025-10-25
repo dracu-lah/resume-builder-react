@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useReactToPrint } from "react-to-print";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,8 @@ import { Switch } from "@/components/ui/switch";
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
   const [showEducation, setShowEducation] = useState(true);
+
+  const [isDesignMode, setIsDesignMode] = useState(false);
   const contentRef = useRef(null);
 
   const reactToPrintFn = useReactToPrint({
@@ -51,11 +54,10 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     documentTitle: "Resume",
   });
 
-
-
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
+      contentEditable={isDesignMode}
       className="bg-white p-4 max-w-4xl resume-container mx-auto text-black"
       style={{
         fontFamily: 'Times, "Times New Roman", serif',
@@ -81,9 +83,9 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               {!showLinks
                 ? "Portfolio"
                 : data.personalInfo.portfolioWebsite.replace(
-                  /^https?:\/\//,
-                  "",
-                )}
+                    /^https?:\/\//,
+                    "",
+                  )}
             </a>
           )}
           {data.personalInfo.linkedInUrl && (
@@ -242,7 +244,11 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             >
               <div>
                 {project.link ? (
-                  <a href={project.link} target="_blank" className="text-indigo-700">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    className="text-indigo-700"
+                  >
                     <span className="font-bold">- {project.name}</span>
                   </a>
                 ) : (
@@ -341,6 +347,20 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               onCheckedChange={setShowEducation}
             />
             <Label htmlFor="disable-education">Show Education</Label>
+          </div>
+
+          <div className="hidden md:flex  items-center space-x-2">
+            <Switch
+              id="design-mode"
+              checked={isDesignMode}
+              onCheckedChange={(e) => {
+                setIsDesignMode(e);
+                if (e) {
+                  toast.info("These changes won't be persisted!");
+                }
+              }}
+            />
+            <Label htmlFor="design-mode">Design Mode</Label>
           </div>
         </div>
       </div>
