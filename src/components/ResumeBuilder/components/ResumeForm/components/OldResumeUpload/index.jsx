@@ -63,7 +63,11 @@ const OldResumeUpload = ({ onUpload }) => {
     const genAI = new GoogleGenAI({ apiKey });
 
     const prompt = `
-Extract this resume text and return JSON in the following schema. Ensure the output is *only* the JSON, with no introductory or concluding text, and that it is a valid JSON string:
+Extract this resume text and return JSON in the following schema. Ensure the output is *only* the JSON, with no introductory or concluding text, and that it is a valid JSON string. The JSON should be wrapped in a Markdown code block like this:
+\`\`\`json
+{ /* ... your JSON ... */ }
+\`\`\`
+
 ${JSON.stringify(defaultValues, null, 2)}
 
 Resume Text:
@@ -71,7 +75,7 @@ ${text}
     `.trim();
 
     const result = await genAI.models.generateContent({
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-2.0-flash-lite",
       contents: prompt,
     });
     let content = await result.candidates[0].content.parts[0].text;
