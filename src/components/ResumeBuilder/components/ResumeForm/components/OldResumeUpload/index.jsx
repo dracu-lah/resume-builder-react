@@ -74,7 +74,7 @@ ${text}
       model: "gemini-2.5-flash-lite",
       contents: prompt,
     });
-    const content = await result.candidates[0].content.parts[0].text;
+    let content = await result.candidates[0].content.parts[0].text;
     const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
     if (jsonMatch && jsonMatch[1]) {
       content = jsonMatch[1];
