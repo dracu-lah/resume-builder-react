@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import pdfToText from "react-pdftotext";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import {
   Dialog,
   DialogContent,
@@ -60,25 +60,21 @@ const OldResumeUpload = ({ onUpload }) => {
   };
 
   const parseResumeWithGemini = async (text, apiKey) => {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const genAI = new GoogleGenAI({ apiKey });
 
     const prompt = `
-Extract this resume text and return JSON in the following schema. Ensure the output is *only* the JSON, with no introductory or concluding text, and that it is a valid JSON string. The JSON should be wrapped in a Markdown code block like this:
-\`\`\`json
-{ /* ... your JSON ... */ }
-\`\`\`
-
+Extract this resume text and return JSON in the following schema. Ensure the output is *only* the JSON, with no introductory or concluding text, and that it is a valid JSON string:
 ${JSON.stringify(defaultValues, null, 2)}
 
 Resume Text:
 ${text}
     `.trim();
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    let content = response.text();
-
+    const result = await genAI.models.generateContent({
+      model: "gemini-2.5-flash-lite",
+      contents: prompt,
+    });
+    let content = await result.candidates[0].content.parts[0].text;
     const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
     if (jsonMatch && jsonMatch[1]) {
       content = jsonMatch[1];
