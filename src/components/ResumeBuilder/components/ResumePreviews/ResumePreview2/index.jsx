@@ -73,12 +73,15 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
           Kerala, India
           <br />
           {data.personalInfo.portfolioWebsite && (
-            <a href={data.personalInfo.portfolioWebsite} className="text-indigo-700">
+            <a
+              href={data.personalInfo.portfolioWebsite}
+              className="text-indigo-700"
+            >
               {showLinks
                 ? "Portfolio"
                 : data.personalInfo.portfolioWebsite
-                  .replace("https://", "")
-                  .replace("http://", "")}
+                    .replace("https://", "")
+                    .replace("http://", "")}
             </a>
           )}
         </div>
@@ -223,7 +226,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       {data.projects && data.projects.length > 0 && (
         <div className="mb-2">
           <h2 className="font-bold mb-1" style={{ fontSize: "11pt" }}>
-            PERSONAL / SIDE PROJECTS
+            PROJECTS
           </h2>
           {data.projects.map((project, index) => (
             <div
