@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { useState } from "react";
 
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const [showLinks, setShowLinks] = useState(false);
+  const [isDesignMode, setIsDesignMode] = useState(false);
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({
     contentRef,
@@ -57,6 +59,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const ResumePreview = ({ data }) => (
     <div
       ref={contentRef}
+      contentEditable={isDesignMode}
       className="bg-white p-4 max-w-4xl resume-container mx-auto text-black"
       style={{
         fontFamily: 'Times, "Times New Roman", serif',
@@ -313,13 +316,28 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="show-links"
-            checked={showLinks}
-            onCheckedChange={setShowLinks}
-          />
-          <Label htmlFor="show-links">Show Links</Label>
+        <div className="flex gap-6">
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="show-links"
+              checked={showLinks}
+              onCheckedChange={setShowLinks}
+            />
+            <Label htmlFor="show-links">Show Links</Label>
+          </div>
+          <div className="hidden md:flex  items-center space-x-2">
+            <Switch
+              id="design-mode"
+              checked={isDesignMode}
+              onCheckedChange={(e) => {
+                setIsDesignMode(e);
+                if (e) {
+                  toast.info("These changes won't be persisted!");
+                }
+              }}
+            />
+            <Label htmlFor="design-mode">Design Mode</Label>
+          </div>
         </div>
       </div>
       <div className="p-4 overflow-scroll">
