@@ -5,7 +5,7 @@ export const sampleData = {
     phone: "+91 7070777077",
     email: "vikas@techedtalk.com",
     location: "Chennai, India",
-    portfolioWebsite: "GitHub/ Behance / Dribbble",
+    portfolioWebsite: "vikasfolio.dev",
     linkedInUrl: "https://www.linkedin.com/in/vikasgupta007",
     summary:
       "Experienced Business Analyst and Data Scientist with expertise in machine learning, data analysis, and process improvement. Proven track record in delivering data-driven solutions and enhancing business efficiency through advanced analytics and automation.",
@@ -31,11 +31,28 @@ export const sampleData = {
   skills: {
     languages: ["Python", "SQL", "JAVA"],
     frameworks: ["Pandas", "Numpy", "Scikit-Learn", "Matplotlib"],
-    databases: ["Power BI", "Excel", "PowerPoint", "Tableau", "MySQL", "SQLite"],
-    architectures: ["PyCharm", "Jupyter Notebook", "Visual Studio Code", "IntelliJ IDEA"],
+    databases: [
+      "Power BI",
+      "Excel",
+      "PowerPoint",
+      "Tableau",
+      "MySQL",
+      "SQLite",
+    ],
+    architectures: [
+      "PyCharm",
+      "Jupyter Notebook",
+      "Visual Studio Code",
+      "IntelliJ IDEA",
+    ],
     tools: [],
     methodologies: [],
-    other: ["Rapport Building", "Strong Stakeholder management", "People Management", "Excellent communication"],
+    other: [
+      "Rapport Building",
+      "Strong Stakeholder management",
+      "People Management",
+      "Excellent communication",
+    ],
   },
   education: [
     {
@@ -43,14 +60,14 @@ export const sampleData = {
       institution: "Vellore Institute of Technology",
       year: "June 2022 - August 2024",
       location: "Chennai, India",
-      additionalInfo: "Kolkata, India"
+      additionalInfo: "Kolkata, India",
     },
     {
       degree: "Bachelor of Science (HONORS) - Mathematics; GPA: 8.70",
       institution: "Barasat Govt. College",
       year: "June 2018 - August 2021",
       location: "",
-      additionalInfo: ""
+      additionalInfo: "",
     },
   ],
   projects: [
@@ -65,7 +82,7 @@ export const sampleData = {
       features: [
         "Managed data integrity by handling missing values and encoding categorical variables, enhancing quality by 33%",
         "Conducted experiments with both classification and regression algorithms to identify the most suitable approach",
-        "Identified and comprehended key factors influencing academic performance through thorough analysis"
+        "Identified and comprehended key factors influencing academic performance through thorough analysis",
       ],
     },
     {
@@ -79,7 +96,7 @@ export const sampleData = {
       features: [
         "Minimized false positives by 16% through rigorous feature engineering and hyperparameter tuning processes",
         "Implemented under-sampling and ensemble techniques to address class imbalance, leading to 15% improved performance",
-        "Successfully mitigated fraudulent transactions while optimizing model efficiency by 23% and accuracy to 87%"
+        "Successfully mitigated fraudulent transactions while optimizing model efficiency by 23% and accuracy to 87%",
       ],
     },
     {
@@ -93,7 +110,7 @@ export const sampleData = {
       features: [
         "Spearheaded the implementation of HIPAA-compliant data encryption protocols across all healthcare solutions, decreasing data breach incidents by 40% and ensuring patient privacy and security",
         "Demonstrated commitment to ethical data practices while contributing to the development of data-driven healthcare solutions",
-        "Enhanced healthcare outcomes by 26% through accurate prediction of heart disease, positively impacting patient well-being"
+        "Enhanced healthcare outcomes by 26% through accurate prediction of heart disease, positively impacting patient well-being",
       ],
     },
   ],
