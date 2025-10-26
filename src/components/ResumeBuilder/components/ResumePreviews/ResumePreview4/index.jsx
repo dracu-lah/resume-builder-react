@@ -389,7 +389,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 }
               }}
             />
-            <Label htmlFor="design-mode">Design Mode</Label>
+            <Label htmlFor="design-mode">Live Text Edit Mode</Label>
           </div>
         </div>
       </div>
