@@ -41,7 +41,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       }}
     >
       {/* Header table: left = location/links, center = name/title, right = contact */}
-      <table width="100%" cellPadding={6} cellSpacing={0} className="mb-2">
+      <table width="100%" cellPadding={6} cellSpacing={0} className="mb-4">
         <tbody>
           <tr>
             <td width="33%" valign="top" style={{ fontSize: "10pt" }}>
@@ -62,24 +62,6 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                           "",
                         )
                       : "Portfolio"}
-                  </a>
-                </div>
-              )}
-
-              {data.personalInfo.linkedInUrl && (
-                <div style={{ marginTop: 6 }}>
-                  <a
-                    href={data.personalInfo.linkedInUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-700"
-                  >
-                    {showLinks
-                      ? data.personalInfo.linkedInUrl.replace(
-                          /^https?:\/\//,
-                          "",
-                        )
-                      : "LinkedIn"}
                   </a>
                 </div>
               )}
