@@ -19,7 +19,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     pageStyle: `
     @page {
       size: A4;
-      margin: 20mm;
+      margin: 12.7mm;
     }
     
     @media print {
@@ -59,14 +59,44 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       className="bg-white p-8 max-w-4xl resume-container mx-auto text-black font-sans"
       style={{ fontFamily: "Arial, sans-serif" }}
     >
-      {/* Header - Single row with location, name, and phone */}
-      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-0">
+      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-2">
         <tbody>
           <tr>
-            <td width="25%" valign="middle" style={{ fontSize: "9pt" }}>
-              {data.personalInfo.location}
+            {/* Left side: location (top) + website (bottom) */}
+            <td width="33%" valign="middle" style={{ fontSize: "9pt" }}>
+              <table width="100%" cellPadding="0" cellSpacing="0">
+                <tbody>
+                  <tr>
+                    <td style={{ paddingBottom: "2px" }}>
+                      {data.personalInfo.location}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      {data.personalInfo.portfolioWebsite && (
+                        <a
+                          href={data.personalInfo.portfolioWebsite}
+                          className="link-blue"
+                          style={{
+                            color: "#2563eb",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          {showLinks
+                            ? data.personalInfo.portfolioWebsite
+                                .replace("https://", "")
+                                .replace("http://", "")
+                            : "Website"}
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </td>
-            <td width="50%" valign="middle" align="center">
+
+            {/* Center: name */}
+            <td width="64%" align="center" valign="middle">
               <h1
                 style={{
                   fontSize: "20pt",
@@ -80,71 +110,41 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                 {data.personalInfo.name?.toUpperCase()}
               </h1>
             </td>
+
+            {/* Right side: phone (top) + email (bottom) */}
             <td
-              width="25%"
+              width="33%"
               valign="middle"
               align="right"
               style={{ fontSize: "9pt" }}
             >
-              {data.personalInfo.phone}
+              <table width="100%" cellPadding="0" cellSpacing="0">
+                <tbody>
+                  <tr>
+                    <td align="right" style={{ paddingBottom: "2px" }}>
+                      {data.personalInfo.phone}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right">
+                      <a
+                        href={`mailto:${data.personalInfo.email}`}
+                        className="link-blue"
+                        style={{
+                          color: "#2563eb",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {data.personalInfo.email}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </td>
           </tr>
         </tbody>
       </table>
-
-      {/* Links row */}
-      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-2">
-        <tbody>
-          <tr>
-            <td width="50%" valign="top" style={{ fontSize: "9pt" }}>
-              {data.personalInfo.linkedin && (
-                <>
-                  <a
-                    href={data.personalInfo.linkedin}
-                    className="link-blue"
-                    style={{ color: "#2563eb", textDecoration: "underline" }}
-                  >
-                    {showLinks
-                      ? data.personalInfo.linkedin
-                          .replace("https://", "")
-                          .replace("http://", "")
-                      : "LinkedIn"}
-                  </a>
-                  {" | "}
-                </>
-              )}
-              {data.personalInfo.portfolioWebsite && (
-                <a
-                  href={data.personalInfo.portfolioWebsite}
-                  className="link-blue"
-                  style={{ color: "#2563eb", textDecoration: "underline" }}
-                >
-                  {showLinks
-                    ? data.personalInfo.portfolioWebsite
-                        .replace("https://", "")
-                        .replace("http://", "")
-                    : "Website"}
-                </a>
-              )}
-            </td>
-            <td
-              width="50%"
-              valign="top"
-              align="right"
-              style={{ fontSize: "9pt" }}
-            >
-              <a
-                href={`mailto:${data.personalInfo.email}`}
-                className="link-blue"
-                style={{ color: "#2563eb", textDecoration: "underline" }}
-              >
-                {data.personalInfo.email}
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
       {/* Horizontal line under name */}
       <table width="100%" cellPadding="0" cellSpacing="0" className="mb-3">
         <tbody>
