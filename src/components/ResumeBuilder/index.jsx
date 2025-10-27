@@ -5,6 +5,7 @@ import ResumePreviewPage3 from "@/components/ResumeBuilder/components/ResumePrev
 import ResumePreviewPage4 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview4";
 import ResumePreviewPage5 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview5";
 import ResumePreviewPage6 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview6";
+import ResumePreviewPage7 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview7";
 import ResumeFormPage from "@/components/ResumeBuilder/components/ResumeForm";
 import { Button } from "../ui/button";
 
@@ -37,6 +38,11 @@ const templates = [
   {
     label: "Resume Preview 6",
     template: ResumePreviewPage6,
+  },
+
+  {
+    label: "Resume with Image",
+    template: ResumePreviewPage7,
   },
 ];
 export default function ResumeBuilder() {
