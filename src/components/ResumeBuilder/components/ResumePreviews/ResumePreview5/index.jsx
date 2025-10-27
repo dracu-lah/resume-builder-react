@@ -6,7 +6,6 @@ import { DownloadJSONButton } from "@/components/ResumeBuilder/components/Downlo
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
-import { useEffect } from "react";
 import { toast } from "sonner";
 
 const ResumePreviewPage = ({ resumeData, setViewMode }) => {
@@ -76,15 +75,17 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                           fontFamily: "Arial, sans-serif",
                         }}
                       >
-                        {data.personalInfo.name}
+                        {data.personalInfo?.name || "Your Name"}
                       </h1>
                     </td>
                   </tr>
-                  <tr>
-                    <td className="text-sm" style={{ fontSize: "10pt" }}>
-                      {data.personalInfo.location}
-                    </td>
-                  </tr>
+                  {data.personalInfo?.location && (
+                    <tr>
+                      <td className="text-sm" style={{ fontSize: "10pt" }}>
+                        {data.personalInfo.location}
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </td>
@@ -97,15 +98,42 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                       className="text-sm"
                       style={{ fontSize: "10pt" }}
                     >
-                      <div>
-                        LinkedIn |{" "}
-                        {data.personalInfo.portfolioWebsite?.replace(
-                          "https://",
-                          "",
-                        ) || "portfolio"}
-                      </div>
-                      <div>{data.personalInfo.phone}</div>
-                      <div>{data.personalInfo.email}</div>
+                      {data.personalInfo?.linkedInUrl && (
+                        <div>
+                          <a
+                            href={data.personalInfo.linkedInUrl}
+                            className="text-indigo-600"
+                          >
+                            {!showLinks
+                              ? "LinkedIn"
+                              : data.personalInfo.linkedInUrl.replace(
+                                  "https://",
+                                  "",
+                                )}
+                          </a>
+                        </div>
+                      )}
+                      {data.personalInfo?.portfolioWebsite && (
+                        <div>
+                          <a
+                            href={data.personalInfo.portfolioWebsite}
+                            className="text-indigo-600"
+                          >
+                            {!showLinks
+                              ? "Portfolio"
+                              : data.personalInfo.portfolioWebsite.replace(
+                                  "https://",
+                                  "",
+                                )}
+                          </a>
+                        </div>
+                      )}
+                      {data.personalInfo?.phone && (
+                        <div>{data.personalInfo.phone}</div>
+                      )}
+                      {data.personalInfo?.email && (
+                        <div>{data.personalInfo.email}</div>
+                      )}
                     </td>
                   </tr>
                 </tbody>
@@ -116,119 +144,184 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       </table>
 
       {/* Summary Section */}
-      <table
-        width="100%"
-        cellPadding="0"
-        cellSpacing="0"
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
-              <h2
-                className="text-lg font-bold mb-3"
-                style={{ fontSize: "14pt", fontFamily: "Arial, sans-serif" }}
-              >
-                Summary
-              </h2>
-              <p
-                className="text-justify"
-                style={{ fontSize: "11pt", lineHeight: "1.4" }}
-              >
-                {data.personalInfo.summary}
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {data.personalInfo?.summary && (
+        <table
+          width="100%"
+          cellPadding="0"
+          cellSpacing="0"
+          className="mb-6 resume-section"
+        >
+          <tbody>
+            <tr>
+              <td>
+                <h2
+                  className="text-lg font-bold mb-3"
+                  style={{ fontSize: "14pt", fontFamily: "Arial, sans-serif" }}
+                >
+                  Summary
+                </h2>
+                <p
+                  className="text-justify"
+                  style={{ fontSize: "11pt", lineHeight: "1.4" }}
+                >
+                  {data.personalInfo.summary}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
 
       {/* Skills Section */}
-      <table
-        width="100%"
-        cellPadding="0"
-        cellSpacing="0"
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
-              <h2
-                className="text-lg font-bold mb-3"
-                style={{ fontSize: "14pt", fontFamily: "Arial, sans-serif" }}
-              >
-                Technical Skills
-              </h2>
-              <table width="100%" cellPadding="0" cellSpacing="0">
-                <tbody>
-                  <tr>
-                    <td width="33%" valign="top">
-                      <table cellPadding="0" cellSpacing="0">
-                        <tbody>
-                          <tr>
-                            <td style={{ fontSize: "10pt", lineHeight: "1.4" }}>
-                              <strong>Languages:</strong>
-                              <br />
-                              {data.skills.languages.filter(Boolean).join(", ")}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                    <td width="33%" valign="top">
-                      <table cellPadding="0" cellSpacing="0">
-                        <tbody>
-                          <tr>
-                            <td style={{ fontSize: "10pt", lineHeight: "1.4" }}>
-                              <strong>Frameworks & Libraries:</strong>
-                              <br />
-                              {data.skills.frameworks
-                                .filter(Boolean)
-                                .join(", ")}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                    <td width="33%" valign="top">
-                      <table cellPadding="0" cellSpacing="0">
-                        <tbody>
-                          <tr>
-                            <td style={{ fontSize: "10pt", lineHeight: "1.4" }}>
-                              <strong>Tools & Platforms:</strong>
-                              <br />
-                              {data.skills.tools.filter(Boolean).join(", ")}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan="3" height="8"></td>
-                  </tr>
-                  <tr>
-                    <td width="33%" valign="top">
-                      <table cellPadding="0" cellSpacing="0">
-                        <tbody>
-                          <tr>
-                            <td style={{ fontSize: "10pt", lineHeight: "1.4" }}>
-                              <strong>Architectures & Methodologies:</strong>
-                              <br />
-                              {data.skills.architectures
-                                .filter(Boolean)
-                                .join(", ")}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {data.skills && (
+        <table
+          width="100%"
+          cellPadding="0"
+          cellSpacing="0"
+          className="mb-6 resume-section"
+        >
+          <tbody>
+            <tr>
+              <td>
+                <h2
+                  className="text-lg font-bold mb-3"
+                  style={{ fontSize: "14pt", fontFamily: "Arial, sans-serif" }}
+                >
+                  Technical Skills
+                </h2>
+                <table width="100%" cellPadding="0" cellSpacing="0">
+                  <tbody>
+                    <tr>
+                      {data.skills.languages?.filter(Boolean).length > 0 && (
+                        <td width="33%" valign="top">
+                          <table cellPadding="0" cellSpacing="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  style={{
+                                    fontSize: "10pt",
+                                    lineHeight: "1.4",
+                                  }}
+                                >
+                                  <strong>Languages:</strong>
+                                  <br />
+                                  {data.skills.languages
+                                    .filter(Boolean)
+                                    .join(", ")}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      )}
+                      {data.skills.frameworks?.filter(Boolean).length > 0 && (
+                        <td width="33%" valign="top">
+                          <table cellPadding="0" cellSpacing="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  style={{
+                                    fontSize: "10pt",
+                                    lineHeight: "1.4",
+                                  }}
+                                >
+                                  <strong>Frameworks & Libraries:</strong>
+                                  <br />
+                                  {data.skills.frameworks
+                                    .filter(Boolean)
+                                    .join(", ")}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      )}
+                      {data.skills.tools?.filter(Boolean).length > 0 && (
+                        <td width="33%" valign="top">
+                          <table cellPadding="0" cellSpacing="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  style={{
+                                    fontSize: "10pt",
+                                    lineHeight: "1.4",
+                                  }}
+                                >
+                                  <strong>Tools & Platforms:</strong>
+                                  <br />
+                                  {data.skills.tools.filter(Boolean).join(", ")}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      )}
+                    </tr>
+                    {data.skills.databases?.filter(Boolean).length > 0 && (
+                      <>
+                        <tr>
+                          <td colSpan="3" height="8"></td>
+                        </tr>
+                        <tr>
+                          <td width="33%" valign="top">
+                            <table cellPadding="0" cellSpacing="0">
+                              <tbody>
+                                <tr>
+                                  <td
+                                    style={{
+                                      fontSize: "10pt",
+                                      lineHeight: "1.4",
+                                    }}
+                                  >
+                                    <strong>Databases:</strong>
+                                    <br />
+                                    {data.skills.databases
+                                      .filter(Boolean)
+                                      .join(", ")}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </>
+                    )}
+                    {data.skills.other?.filter(Boolean).length > 0 && (
+                      <>
+                        <tr>
+                          <td colSpan="3" height="8"></td>
+                        </tr>
+                        <tr>
+                          <td colSpan="2" valign="top">
+                            <table cellPadding="0" cellSpacing="0">
+                              <tbody>
+                                <tr>
+                                  <td
+                                    style={{
+                                      fontSize: "10pt",
+                                      lineHeight: "1.4",
+                                    }}
+                                  >
+                                    <strong>Other Skills:</strong>
+                                    <br />
+                                    {data.skills.other
+                                      .filter(Boolean)
+                                      .join(", ")}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </>
+                    )}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
 
       {/* Horizontal Line */}
       <table width="100%" cellPadding="0" cellSpacing="0" className="mb-6">
@@ -240,123 +333,153 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       </table>
 
       {/* Employment Section */}
-      <table
-        width="100%"
-        cellPadding="0"
-        cellSpacing="0"
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
-              <h2
-                className="text-lg font-bold mb-3"
-                style={{ fontSize: "14pt", fontFamily: "Arial, sans-serif" }}
-              >
-                Employment
-              </h2>
-
-              {data.experience.map((exp, index) => (
-                <table
-                  key={index}
-                  width="100%"
-                  cellPadding="0"
-                  cellSpacing="0"
-                  className="mb-4"
+      {data.experience && data.experience.length > 0 && (
+        <table
+          width="100%"
+          cellPadding="0"
+          cellSpacing="0"
+          className="mb-6 resume-section"
+        >
+          <tbody>
+            <tr>
+              <td>
+                <h2
+                  className="text-lg font-bold mb-3"
+                  style={{ fontSize: "14pt", fontFamily: "Arial, sans-serif" }}
                 >
-                  <tbody>
-                    <tr>
-                      <td width="70%" valign="top">
-                        <table cellPadding="0" cellSpacing="0">
-                          <tbody>
-                            <tr>
-                              <td
-                                style={{ fontSize: "12pt", fontWeight: "bold" }}
-                              >
-                                {exp.positions?.[0]?.title ||
-                                  "Frontend Developer"}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td width="30%" valign="top" align="right">
-                        <table cellPadding="0" cellSpacing="0">
-                          <tbody>
-                            <tr>
-                              <td
-                                align="right"
-                                style={{ fontSize: "10pt", fontWeight: "bold" }}
-                              >
-                                {exp.positions?.[0]?.duration ||
-                                  "Jun 2023 - Aug 2025"}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        colSpan="2"
-                        style={{ fontSize: "11pt", fontStyle: "italic" }}
-                      >
-                        {exp.company}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2" height="8"></td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2">
-                        <table width="100%" cellPadding="0" cellSpacing="0">
-                          <tbody>
-                            {exp.positions?.[0]?.achievements?.map(
-                              (achievement, achIndex) => (
-                                <tr key={achIndex}>
-                                  <td
-                                    width="20"
-                                    valign="top"
-                                    style={{ fontSize: "10pt" }}
+                  Work Experience
+                </h2>
+
+                {data.experience.map((exp, index) => (
+                  <table
+                    key={index}
+                    width="100%"
+                    cellPadding="0"
+                    cellSpacing="0"
+                    className="mb-4"
+                  >
+                    <tbody>
+                      {exp.positions?.map((position, posIndex) => (
+                        <tbody key={posIndex}>
+                          <tr>
+                            <td width="70%" valign="top">
+                              <table cellPadding="0" cellSpacing="0">
+                                <tbody>
+                                  <tr>
+                                    <td
+                                      style={{
+                                        fontSize: "12pt",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      {position.title}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                            <td width="30%" valign="top" align="right">
+                              <table cellPadding="0" cellSpacing="0">
+                                <tbody>
+                                  <tr>
+                                    <td
+                                      align="right"
+                                      style={{
+                                        fontSize: "10pt",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      {position.duration}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              colSpan="2"
+                              style={{ fontSize: "11pt", fontStyle: "italic" }}
+                            >
+                              {exp.company}
+                              {position.link && (
+                                <>
+                                  {" | "}
+                                  <a
+                                    href={position.link}
+                                    className="text-indigo-600"
                                   >
-                                    •
-                                  </td>
-                                  <td
-                                    style={{
-                                      fontSize: "10pt",
-                                      lineHeight: "1.4",
-                                      textAlign: "justify",
-                                    }}
-                                  >
-                                    {achievement}
-                                  </td>
-                                </tr>
-                              ),
-                            )}
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                    {exp.positions?.[0]?.techStack && (
-                      <>
-                        <tr>
-                          <td colSpan="2" height="8"></td>
-                        </tr>
-                        <tr>
-                          <td colSpan="2" style={{ fontSize: "10pt" }}>
-                            <strong>Tech Stack:</strong>{" "}
-                            {exp.positions[0].techStack}
-                          </td>
-                        </tr>
-                      </>
-                    )}
-                  </tbody>
-                </table>
-              ))}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                                    {!showLinks ? "Link" : position.link}
+                                  </a>
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colSpan="2" height="8"></td>
+                          </tr>
+                          <tr>
+                            <td colSpan="2">
+                              <table
+                                width="100%"
+                                cellPadding="0"
+                                cellSpacing="0"
+                              >
+                                <tbody>
+                                  {position.achievements?.map(
+                                    (achievement, achIndex) => (
+                                      <tr key={achIndex}>
+                                        <td
+                                          width="20"
+                                          valign="top"
+                                          style={{ fontSize: "10pt" }}
+                                        >
+                                          •
+                                        </td>
+                                        <td
+                                          style={{
+                                            fontSize: "10pt",
+                                            lineHeight: "1.4",
+                                            textAlign: "justify",
+                                          }}
+                                        >
+                                          {achievement}
+                                        </td>
+                                      </tr>
+                                    ),
+                                  )}
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          {position.techStack && (
+                            <>
+                              <tr>
+                                <td colSpan="2" height="8"></td>
+                              </tr>
+                              <tr>
+                                <td colSpan="2" style={{ fontSize: "10pt" }}>
+                                  <strong>Tech Stack:</strong>{" "}
+                                  {position.techStack}
+                                </td>
+                              </tr>
+                            </>
+                          )}
+                          {posIndex < exp.positions.length - 1 && (
+                            <tr>
+                              <td colSpan="2" height="12"></td>
+                            </tr>
+                          )}
+                        </tbody>
+                      ))}
+                    </tbody>
+                  </table>
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
 
       {/* Projects Section */}
       {data.projects && data.projects.length > 0 && (
@@ -390,7 +513,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                           {project.name}
                           {project.link && (
                             <>
-                              &nbsp;
+                              {" | "}
                               <a
                                 href={project.link}
                                 className="text-indigo-700 font-normal"
@@ -405,24 +528,72 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                           )}
                         </td>
                       </tr>
-                      <tr>
-                        <td style={{ fontSize: "10pt" }}>
-                          <strong>Tech Stack:</strong>{" "}
-                          {project.technologies.filter(Boolean).join(", ")}
-                        </td>
-                      </tr>
-                      {project.description && (
+                      {project.technologies?.filter(Boolean).length > 0 && (
                         <tr>
-                          <td
-                            style={{
-                              fontSize: "10pt",
-                              lineHeight: "1.4",
-                              textAlign: "justify",
-                            }}
-                          >
-                            {project.description}
+                          <td style={{ fontSize: "10pt" }}>
+                            <strong>Tech Stack:</strong>{" "}
+                            {project.technologies.filter(Boolean).join(", ")}
                           </td>
                         </tr>
+                      )}
+                      {project.description && (
+                        <>
+                          <tr>
+                            <td height="8"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                fontSize: "10pt",
+                                lineHeight: "1.4",
+                                textAlign: "justify",
+                              }}
+                            >
+                              {project.description}
+                            </td>
+                          </tr>
+                        </>
+                      )}
+                      {project.features?.filter(Boolean).length > 0 && (
+                        <>
+                          <tr>
+                            <td height="8"></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <table
+                                width="100%"
+                                cellPadding="0"
+                                cellSpacing="0"
+                              >
+                                <tbody>
+                                  {project.features
+                                    .filter(Boolean)
+                                    .map((feature, featIndex) => (
+                                      <tr key={featIndex}>
+                                        <td
+                                          width="20"
+                                          valign="top"
+                                          style={{ fontSize: "10pt" }}
+                                        >
+                                          •
+                                        </td>
+                                        <td
+                                          style={{
+                                            fontSize: "10pt",
+                                            lineHeight: "1.4",
+                                            textAlign: "justify",
+                                          }}
+                                        >
+                                          {feature}
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </>
                       )}
                     </tbody>
                   </table>
@@ -434,7 +605,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       )}
 
       {/* Achievements & Leadership Section */}
-      {data.achievements.filter(Boolean).length > 0 && (
+      {data.achievements?.filter(Boolean).length > 0 && (
         <table
           width="100%"
           cellPadding="0"
