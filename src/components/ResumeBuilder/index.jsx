@@ -3,6 +3,8 @@ import ResumePreviewPage1 from "@/components/ResumeBuilder/components/ResumePrev
 import ResumePreviewPage2 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview2";
 import ResumePreviewPage3 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview3";
 import ResumePreviewPage4 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview4";
+import ResumePreviewPage5 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview5";
+import ResumePreviewPage6 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview6";
 import ResumeFormPage from "@/components/ResumeBuilder/components/ResumeForm";
 import { Button } from "../ui/button";
 
@@ -26,6 +28,16 @@ const templates = [
     label: "Vikas Gupta Inspired Template",
     template: ResumePreviewPage4,
   },
+
+  {
+    label: "Resume Preview 5",
+    template: ResumePreviewPage5,
+  },
+
+  {
+    label: "Resume Preview 6",
+    template: ResumePreviewPage6,
+  },
 ];
 export default function ResumeBuilder() {
   const [viewMode, setViewMode] = useState("edit");
@@ -35,12 +47,15 @@ export default function ResumeBuilder() {
   if (viewMode === "preview" && resumeData) {
     return (
       <div className="bg-white dark:bg-zinc-900">
-        <div className="p-4 flex flex-col justify-center items-center  gap-2">
+        <div className="p-4 flex   flex-col justify-center items-center  gap-2">
           <h1 className="text-xl font-semibold">Available Templates</h1>
-          <div className="flex flex-col md:flex-row gap-2 ">
-            {templates.map((template) => (
-              <Button variant="outline" onClick={() => setTemplate(template)}>
-                {template.label}
+          <div className="flex flex-col overflow-auto w-full justify-center md:flex-row gap-2 ">
+            {templates.map((temp) => (
+              <Button
+                variant={template === temp ? "" : "outline"}
+                onClick={() => setTemplate(temp)}
+              >
+                {temp.label}
               </Button>
             ))}
           </div>
