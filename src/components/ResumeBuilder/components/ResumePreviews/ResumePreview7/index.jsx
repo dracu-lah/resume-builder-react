@@ -121,60 +121,67 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                   </div>
                 )}
 
+                <div
+                  style={{
+                    marginTop: 8,
+                    display: "flex",
+                    gap: 8,
+                    alignItems: "center",
+                    fontSize: "11pt",
+                  }}
+                >
+                  {data.personalInfo?.phone && (
+                    <div>{data.personalInfo.phone}</div>
+                  )}
+                  {data.personalInfo?.phone && data.personalInfo?.email && (
+                    <div>|</div>
+                  )}
+                  {data.personalInfo?.email && (
+                    <div>{data.personalInfo.email}</div>
+                  )}
+                </div>
                 <div style={{ marginTop: 6 }}>
-                  {data.personalInfo?.linkedInUrl && (
-                    <div>
-                      <a
-                        href={data.personalInfo.linkedInUrl}
-                        className="text-indigo-700"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {showLinks
-                          ? data.personalInfo.linkedInUrl.replace(
-                              /^https?:\/\//,
-                              "",
-                            )
-                          : "LinkedIn"}
-                      </a>
-                    </div>
-                  )}
-
-                  {data.personalInfo?.portfolioWebsite && (
-                    <div style={{ marginTop: 4 }}>
-                      <a
-                        href={data.personalInfo.portfolioWebsite}
-                        className="text-indigo-700"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {showLinks
-                          ? data.personalInfo.portfolioWebsite.replace(
-                              /^https?:\/\//,
-                              "",
-                            )
-                          : "Website"}
-                      </a>
-                    </div>
-                  )}
-
-                  <div
-                    style={{
-                      marginTop: 8,
-                      display: "flex",
-                      gap: 8,
-                      alignItems: "center",
-                      fontSize: "11pt",
-                    }}
-                  >
-                    {data.personalInfo?.phone && (
-                      <div>{data.personalInfo.phone}</div>
+                  <div className="flex gap-4">
+                    {data.personalInfo?.linkedInUrl && (
+                      <div>
+                        <a
+                          href={data.personalInfo.linkedInUrl}
+                          className="text-indigo-700"
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            fontSize: "11pt",
+                          }}
+                        >
+                          {showLinks
+                            ? data.personalInfo.linkedInUrl.replace(
+                                /^https?:\/\//,
+                                "",
+                              )
+                            : "LinkedIn"}
+                        </a>
+                      </div>
                     )}
-                    {data.personalInfo?.phone && data.personalInfo?.email && (
-                      <div>|</div>
-                    )}
-                    {data.personalInfo?.email && (
-                      <div>{data.personalInfo.email}</div>
+
+                    {data.personalInfo?.portfolioWebsite && (
+                      <div>
+                        <a
+                          href={data.personalInfo.portfolioWebsite}
+                          className="text-indigo-700"
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            fontSize: "11pt",
+                          }}
+                        >
+                          {showLinks
+                            ? data.personalInfo.portfolioWebsite.replace(
+                                /^https?:\/\//,
+                                "",
+                              )
+                            : "Website"}
+                        </a>
+                      </div>
                     )}
                   </div>
                 </div>
