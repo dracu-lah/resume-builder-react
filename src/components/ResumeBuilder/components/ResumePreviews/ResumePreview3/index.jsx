@@ -14,7 +14,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   const contentRef = useRef(null);
 
   const reactToPrintFn = useReactToPrint({
-    content: () => contentRef.current,
+    contentRef,
     preserveAfterPrint: true,
     pageStyle: `
       @page {
