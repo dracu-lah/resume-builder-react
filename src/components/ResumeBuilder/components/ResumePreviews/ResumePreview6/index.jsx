@@ -59,13 +59,44 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       className="bg-white p-8 max-w-4xl resume-container mx-auto text-black font-sans"
       style={{ fontFamily: "Arial, sans-serif" }}
     >
-      {/* Header with location on left, links on right */}
-      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-1">
+      {/* Header - Single row with location, name, and phone */}
+      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-0">
+        <tbody>
+          <tr>
+            <td width="25%" valign="middle" style={{ fontSize: "9pt" }}>
+              {data.personalInfo.location}
+            </td>
+            <td width="50%" valign="middle" align="center">
+              <h1
+                style={{
+                  fontSize: "20pt",
+                  fontWeight: "bold",
+                  fontFamily: "Arial, sans-serif",
+                  margin: 0,
+                  padding: 0,
+                  letterSpacing: "2px",
+                }}
+              >
+                {data.personalInfo.name?.toUpperCase()}
+              </h1>
+            </td>
+            <td
+              width="25%"
+              valign="middle"
+              align="right"
+              style={{ fontSize: "9pt" }}
+            >
+              {data.personalInfo.phone}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* Links row */}
+      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-2">
         <tbody>
           <tr>
             <td width="50%" valign="top" style={{ fontSize: "9pt" }}>
-              {data.personalInfo.location}
-              <br />
               {data.personalInfo.linkedin && (
                 <>
                   <a
@@ -92,7 +123,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                     ? data.personalInfo.portfolioWebsite
                         .replace("https://", "")
                         .replace("http://", "")
-                    : "nevil.dev"}
+                    : "Website"}
                 </a>
               )}
             </td>
@@ -102,8 +133,6 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               align="right"
               style={{ fontSize: "9pt" }}
             >
-              {data.personalInfo.phone}
-              <br />
               <a
                 href={`mailto:${data.personalInfo.email}`}
                 className="link-blue"
@@ -111,28 +140,6 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               >
                 {data.personalInfo.email}
               </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      {/* Name - Large and centered */}
-      <table width="100%" cellPadding="0" cellSpacing="0" className="mb-3">
-        <tbody>
-          <tr>
-            <td align="center">
-              <h1
-                style={{
-                  fontSize: "20pt",
-                  fontWeight: "bold",
-                  fontFamily: "Arial, sans-serif",
-                  margin: 0,
-                  padding: 0,
-                  letterSpacing: "2px",
-                }}
-              >
-                {data.personalInfo.name?.toUpperCase()}
-              </h1>
             </td>
           </tr>
         </tbody>
@@ -304,7 +311,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                         valign="top"
                         style={{ fontSize: "9pt", fontWeight: "bold" }}
                       >
-                        {exp.positions?.[0]?.title || "Frontend Developer"}
+                        {exp.positions?.[0]?.title}
                       </td>
                       <td
                         width="30%"
@@ -424,31 +431,24 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                     <tr>
                       <td style={{ fontSize: "9pt", lineHeight: "1.5" }}>
                         •&nbsp;
-                        <strong>{project.name}</strong>
+                        {project.link ? (
+                          <a
+                            href={project.link}
+                            className="link-blue"
+                            style={{
+                              fontSize: "9pt",
+                              fontWeight: "bold",
+                              color: "#2563eb",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            {project.name}
+                          </a>
+                        ) : (
+                          <strong>{project.name}</strong>
+                        )}
                         {project.year && <span> ({project.year})</span>}
                         {project.description && <>: {project.description}</>}
-                        {project.link && (
-                          <>
-                            <br />
-                            &nbsp;&nbsp;&nbsp;
-                            <a
-                              href={project.link}
-                              className="link-blue"
-                              style={{
-                                fontSize: "9pt",
-                                fontWeight: "normal",
-                                color: "#2563eb",
-                                textDecoration: "underline",
-                              }}
-                            >
-                              {showLinks
-                                ? project.link
-                                    .replace("https://", "")
-                                    .replace("http://", "")
-                                : "Link"}
-                            </a>
-                          </>
-                        )}
                         {project.technologies.filter(Boolean).length > 0 && (
                           <>
                             <br />
