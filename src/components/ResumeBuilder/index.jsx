@@ -3,6 +3,8 @@ import ResumePreviewPage1 from "@/components/ResumeBuilder/components/ResumePrev
 import ResumePreviewPage2 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview2";
 import ResumePreviewPage3 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview3";
 import ResumePreviewPage4 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview4";
+import ResumePreviewPage5 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview5";
+import ResumePreviewPage6 from "@/components/ResumeBuilder/components/ResumePreviews/ResumePreview6";
 import ResumeFormPage from "@/components/ResumeBuilder/components/ResumeForm";
 import { Button } from "../ui/button";
 
@@ -25,6 +27,16 @@ const templates = [
   {
     label: "Vikas Gupta Inspired Template",
     template: ResumePreviewPage4,
+  },
+
+  {
+    label: "Resume Preview 5",
+    template: ResumePreviewPage5,
+  },
+
+  {
+    label: "Resume Preview 6",
+    template: ResumePreviewPage6,
   },
 ];
 export default function ResumeBuilder() {
