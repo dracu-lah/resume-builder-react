@@ -771,7 +771,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                               )}
 
                               {/* Remove Button */}
-                              {projectFields.fields.length > 1 && (
+                              {
                                 <Button
                                   type="button"
                                   variant="destructive"
@@ -780,7 +780,7 @@ const ResumeFormPage = ({ setResumeData, setViewMode }) => {
                                 >
                                   Remove Project
                                 </Button>
-                              )}
+                              }
                             </div>
                           </CardContent>
                         </Card>
