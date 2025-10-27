@@ -18,11 +18,14 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
     pageStyle: `
       @page { size: A4; margin: 20mm; }
       @media print {
-        body { -webkit-print-color-adjust: exact; color-adjust: exact; }
-        .resume-container { width:100%; max-width:none; margin:0; padding:0; font-size:12px; line-height:1.4; }
+        body { -webkit-print-color-adjust: exact; color-adjust: exact; -webkit-font-smoothing: antialiased; }
+        .resume-container { width:100%; max-width:none; margin:0; padding:0; font-size:12px; line-height:1.35; }
         .resume-section { break-inside: avoid; page-break-inside: avoid; }
         .page-break { page-break-before: always; }
         a { color: blue !important; text-decoration: underline; }
+        ul { list-style-type: disc !important; margin: 0 0 8px 18px !important; padding: 0 !important; }
+        li { margin-bottom: 6px !important; display: list-item !important; }
+        .print\\:hidden { display: none !important; }
       }
     `,
     documentTitle: "Resume",
@@ -32,7 +35,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
   });
 
   useEffect(() => {
-    // keep component mount stable (no-op), place for side effects later
+    // reserved for future side effects
   }, []);
 
   const ResumePreview = ({ data }) => (
@@ -41,61 +44,118 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       contentEditable={isDesignMode}
       className="bg-white p-8 max-w-4xl resume-container mx-auto text-black"
       style={{
-        fontFamily: 'Times, "Times New Roman", serif',
+        fontFamily: 'Georgia, "Times New Roman", Times, serif',
         fontSize: "11pt",
-        lineHeight: 1.4,
+        lineHeight: 1.35,
+        color: "#111",
       }}
     >
-      {/* Header table: left = name + links, center = empty (visual balance), right = contact */}
+      {/* Force list styles in preview (overrides global resets that remove bullets) */}
+      <style>{`
+        .resume-container ul {
+          list-style-type: disc !important;
+          list-style-position: outside !important;
+          margin: 8px 0 8px 18px !important;
+          padding: 0 !important;
+        }
+        .resume-container li {
+          margin-bottom: 6px !important;
+          display: list-item !important;
+        }
+        /* nested lists spacing */
+        .resume-container ul ul {
+          margin-left: 24px !important;
+        }
+      `}</style>
+
+      {/* Header: name/links left, contact right */}
       <table
         width="100%"
         cellPadding={6}
         cellSpacing={0}
         className="mb-6 resume-section"
+        style={{ tableLayout: "fixed" }}
       >
         <tbody>
           <tr>
-            <td width="60%" valign="top" style={{ fontSize: "18pt" }}>
-              <div style={{ fontWeight: 700, fontSize: "18pt", lineHeight: 1 }}>
-                {data.personalInfo.name}
+            <td
+              width="60%"
+              valign="top"
+              style={{ fontSize: "18pt", verticalAlign: "top" }}
+            >
+              <div style={{ fontWeight: 800, fontSize: "20pt", lineHeight: 1 }}>
+                {data.personalInfo?.name || ""}
               </div>
 
-              <div style={{ marginTop: 6, fontSize: "10pt" }}>
-                {data.personalInfo.portfolioWebsite && (
-                  <span style={{ marginRight: 12 }}>
-                    <a
-                      href={data.personalInfo.portfolioWebsite}
-                      className="text-indigo-700"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {showLinks
-                        ? data.personalInfo.portfolioWebsite.replace(
-                            /^https?:\/\//,
-                            "",
-                          )
-                        : "Website"}
-                    </a>
-                  </span>
+              <div style={{ marginTop: 6, fontSize: "10pt", color: "#333" }}>
+                {data.personalInfo?.title && (
+                  <div
+                    style={{ fontSize: "11pt", fontWeight: 600, color: "#222" }}
+                  >
+                    {data.personalInfo.title}
+                  </div>
                 )}
 
-                {data.personalInfo.linkedInUrl && (
-                  <span>
-                    <a
-                      href={data.personalInfo.linkedInUrl}
-                      className="text-indigo-700"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {showLinks
-                        ? data.personalInfo.linkedInUrl.replace(
-                            /^https?:\/\//,
-                            "",
-                          )
-                        : "LinkedIn"}
-                    </a>
-                  </span>
-                )}
+                <div style={{ marginTop: 6 }}>
+                  {data.personalInfo?.portfolioWebsite && (
+                    <span style={{ marginRight: 12 }}>
+                      <a
+                        href={data.personalInfo.portfolioWebsite}
+                        className="text-indigo-700"
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ color: "#1f6feb", textDecoration: "none" }}
+                      >
+                        {showLinks
+                          ? data.personalInfo.portfolioWebsite.replace(
+                              /^https?:\/\//,
+                              "",
+                            )
+                          : "Website"}
+                      </a>
+                    </span>
+                  )}
+
+                  {data.personalInfo?.linkedInUrl && (
+                    <span>
+                      <a
+                        href={data.personalInfo.linkedInUrl}
+                        className="text-indigo-700"
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ color: "#1f6feb", textDecoration: "none" }}
+                      >
+                        {showLinks
+                          ? data.personalInfo.linkedInUrl.replace(
+                              /^https?:\/\//,
+                              "",
+                            )
+                          : "LinkedIn"}
+                      </a>
+                    </span>
+                  )}
+                </div>
+
+                <div
+                  style={{
+                    marginTop: 8,
+                    display: "flex",
+                    gap: 8,
+                    alignItems: "center",
+                    fontSize: "11pt",
+                    color: "#222",
+                  }}
+                >
+                  {data.personalInfo?.phone && (
+                    <div>{data.personalInfo.phone}</div>
+                  )}
+                  {data.personalInfo?.phone && data.personalInfo?.email && (
+                    <div>|</div>
+                  )}
+                  {data.personalInfo?.email && (
+                    <div>{data.personalInfo.email}</div>
+                  )}
+                </div>
               </div>
             </td>
 
@@ -103,13 +163,15 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               width="40%"
               valign="top"
               align="right"
-              style={{ fontSize: "10pt" }}
+              style={{ fontSize: "10pt", verticalAlign: "top" }}
             >
-              <div>
-                {data.personalInfo.phone && (
+              <div
+                style={{ color: "#222", textAlign: "right", fontSize: "11pt" }}
+              >
+                {data.personalInfo?.phone && (
                   <div>{data.personalInfo.phone}</div>
                 )}
-                {data.personalInfo.email && (
+                {data.personalInfo?.email && (
                   <div style={{ marginTop: 6 }}>{data.personalInfo.email}</div>
                 )}
               </div>
@@ -119,114 +181,97 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       </table>
 
       {/* Profile Summary */}
-      <table
-        width="100%"
-        cellPadding={6}
-        cellSpacing={0}
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
-              <div
-                style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
-              >
-                PROFILE SUMMARY
-              </div>
-              {data.personalInfo.title && (
-                <div
-                  style={{ fontSize: "12pt", fontWeight: 600, marginBottom: 6 }}
-                >
-                  {data.personalInfo.title}
-                </div>
-              )}
-              {data.personalInfo.summary && (
-                <p
-                  style={{ fontSize: "11pt", textAlign: "justify", margin: 0 }}
-                >
-                  {data.personalInfo.summary}
-                </p>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <section style={{ marginBottom: 18 }}>
+        <div style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}>
+          PROFILE SUMMARY
+        </div>
+        {data.personalInfo?.title && (
+          <div style={{ fontSize: "12pt", fontWeight: 600, marginBottom: 6 }}>
+            {data.personalInfo.title}
+          </div>
+        )}
+        {data.personalInfo?.summary && (
+          <p style={{ fontSize: "11pt", textAlign: "justify", margin: 0 }}>
+            {data.personalInfo.summary}
+          </p>
+        )}
+      </section>
 
       {/* Experience */}
-      <table
-        width="100%"
-        cellPadding={6}
-        cellSpacing={0}
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
+      <section style={{ marginBottom: 18 }}>
+        <div style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}>
+          EXPERIENCE
+        </div>
+
+        {Array.isArray(data.experience) &&
+          data.experience.map((exp, idx) => (
+            <div key={idx} style={{ marginBottom: 12 }}>
               <div
-                style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                }}
               >
-                EXPERIENCE
+                <div style={{ fontSize: "12pt", fontWeight: 700 }}>
+                  {exp.company}
+                </div>
+                <div style={{ fontSize: "10pt", color: "#444" }}>
+                  {exp.range || ""}
+                </div>
               </div>
 
-              {data.experience.map((exp, idx) => (
-                <table
-                  key={idx}
-                  width="100%"
-                  cellPadding={4}
-                  cellSpacing={0}
-                  style={{ marginBottom: 12 }}
-                >
-                  <tbody>
-                    <tr>
-                      <td style={{ fontSize: "12pt", fontWeight: 700 }}>
-                        {exp.company}
-                      </td>
-                      <td
-                        align="right"
-                        style={{ fontSize: "10pt", whiteSpace: "nowrap" }}
-                      ></td>
-                    </tr>
+              {Array.isArray(exp.positions) &&
+                exp.positions.map((position, pIdx) => (
+                  <div key={pIdx} style={{ paddingTop: 10 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "baseline",
+                        gap: 12,
+                      }}
+                    >
+                      <div style={{ fontSize: "11pt", fontWeight: 600 }}>
+                        {position.title}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "10pt",
+                          fontWeight: 500,
+                          color: "#444",
+                        }}
+                      >
+                        {position.duration}
+                      </div>
+                    </div>
 
-                    {exp.positions.map((position, pIdx) => (
-                      <tr key={pIdx}>
-                        <td colSpan={2} style={{ paddingTop: 8 }}>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "baseline",
-                              gap: 12,
-                            }}
-                          >
-                            <div style={{ fontSize: "11pt", fontWeight: 600 }}>
-                              {position.title}
-                            </div>
-                            <div style={{ fontSize: "10pt", fontWeight: 500 }}>
-                              {position.duration}
-                            </div>
-                          </div>
+                    {position.client && (
+                      <div
+                        style={{
+                          fontStyle: "italic",
+                          marginTop: 6,
+                          fontSize: "10pt",
+                          color: "#444",
+                        }}
+                      >
+                        {position.client}
+                      </div>
+                    )}
 
-                          {position.client && (
-                            <div
-                              style={{
-                                fontStyle: "italic",
-                                marginTop: 6,
-                                fontSize: "10pt",
-                              }}
-                            >
-                              {position.client}
-                            </div>
-                          )}
-
-                          <ul
-                            style={{
-                              marginTop: 8,
-                              paddingLeft: 18,
-                              fontSize: "10pt",
-                              lineHeight: 1.3,
-                            }}
-                          >
-                            {position.achievements?.map((ach, aIdx) => (
+                    {Array.isArray(position.achievements) &&
+                      position.achievements.filter(Boolean).length > 0 && (
+                        <ul
+                          style={{
+                            marginTop: 8,
+                            paddingLeft: 18,
+                            fontSize: "10pt",
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          {position.achievements
+                            .filter(Boolean)
+                            .map((ach, aIdx) => (
                               <li
                                 key={aIdx}
                                 style={{
@@ -234,259 +279,205 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
                                   textAlign: "justify",
                                 }}
                               >
-                                • {ach}
+                                {ach}
                               </li>
                             ))}
-                          </ul>
+                        </ul>
+                      )}
 
-                          <div
-                            style={{
-                              marginTop: 6,
-                              fontSize: "10pt",
-                              fontStyle: "italic",
-                            }}
-                          >
-                            <strong>Tech Stack:</strong>{" "}
-                            {Array.isArray(position.techStack)
-                              ? position.techStack.join(", ")
-                              : position.techStack ||
-                                exp.techStack ||
-                                "Not specified"}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ))}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                    {/* Tech Stack: show only if present */}
+                    {((Array.isArray(position.techStack) &&
+                      position.techStack.filter(Boolean).length > 0) ||
+                      (Array.isArray(exp.techStack) &&
+                        exp.techStack.filter(Boolean).length > 0) ||
+                      (typeof position.techStack === "string" &&
+                        position.techStack.trim()) ||
+                      (typeof exp.techStack === "string" &&
+                        exp.techStack.trim())) && (
+                      <div
+                        style={{
+                          marginTop: 8,
+                          fontSize: "10pt",
+                          fontStyle: "italic",
+                          color: "#333",
+                        }}
+                      >
+                        <strong>Tech Stack:</strong>{" "}
+                        {Array.isArray(position.techStack) &&
+                        position.techStack.filter(Boolean).length > 0
+                          ? position.techStack.filter(Boolean).join(", ")
+                          : Array.isArray(exp.techStack) &&
+                              exp.techStack.filter(Boolean).length > 0
+                            ? exp.techStack.filter(Boolean).join(", ")
+                            : (typeof position.techStack === "string" &&
+                                position.techStack) ||
+                              (typeof exp.techStack === "string" &&
+                                exp.techStack) ||
+                              ""}
+                      </div>
+                    )}
+                  </div>
+                ))}
+            </div>
+          ))}
+      </section>
 
       {/* Technical Skills */}
-      <table
-        width="100%"
-        cellPadding={6}
-        cellSpacing={0}
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
-              <div
-                style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
-              >
-                TECHNICAL SKILLS
-              </div>
-              <div style={{ fontSize: "10pt", lineHeight: 1.35 }}>
-                {data.skills.languages?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Languages:</strong>{" "}
-                    {data.skills.languages.filter(Boolean).join(", ")}
-                  </div>
-                )}
-                {data.skills.frameworks?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Frameworks & Libraries:</strong>{" "}
-                    {data.skills.frameworks.filter(Boolean).join(", ")}
-                  </div>
-                )}
-                {data.skills.databases?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Databases:</strong>{" "}
-                    {data.skills.databases.filter(Boolean).join(", ")}
-                  </div>
-                )}
-                {data.skills.architectures?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Architectures:</strong>{" "}
-                    {data.skills.architectures.filter(Boolean).join(", ")}
-                  </div>
-                )}
-                {data.skills.tools?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Tools & Platforms:</strong>{" "}
-                    {data.skills.tools.filter(Boolean).join(", ")}
-                  </div>
-                )}
-                {data.skills.methodologies?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Methodologies:</strong>{" "}
-                    {data.skills.methodologies.filter(Boolean).join(", ")}
-                  </div>
-                )}
-                {data.skills.other?.filter(Boolean).length > 0 && (
-                  <div style={{ marginBottom: 6 }}>
-                    <strong>Other Skills:</strong>{" "}
-                    {data.skills.other.filter(Boolean).join(", ")}
-                  </div>
-                )}
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <section style={{ marginBottom: 18 }}>
+        <div style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}>
+          TECHNICAL SKILLS
+        </div>
+        <div style={{ fontSize: "10pt", lineHeight: 1.35, color: "#222" }}>
+          {data.skills?.languages?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Languages:</strong>{" "}
+              {data.skills.languages.filter(Boolean).join(", ")}
+            </div>
+          )}
+          {data.skills?.frameworks?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Frameworks & Libraries:</strong>{" "}
+              {data.skills.frameworks.filter(Boolean).join(", ")}
+            </div>
+          )}
+          {data.skills?.databases?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Databases:</strong>{" "}
+              {data.skills.databases.filter(Boolean).join(", ")}
+            </div>
+          )}
+          {data.skills?.architectures?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Architectures:</strong>{" "}
+              {data.skills.architectures.filter(Boolean).join(", ")}
+            </div>
+          )}
+          {data.skills?.tools?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Tools & Platforms:</strong>{" "}
+              {data.skills.tools.filter(Boolean).join(", ")}
+            </div>
+          )}
+          {data.skills?.methodologies?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Methodologies:</strong>{" "}
+              {data.skills.methodologies.filter(Boolean).join(", ")}
+            </div>
+          )}
+          {data.skills?.other?.filter(Boolean).length > 0 && (
+            <div style={{ marginBottom: 6 }}>
+              <strong>Other Skills:</strong>{" "}
+              {data.skills.other.filter(Boolean).join(", ")}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Projects */}
-      {data.projects?.length > 0 && (
-        <table
-          width="100%"
-          cellPadding={6}
-          cellSpacing={0}
-          className="mb-6 resume-section"
-        >
-          <tbody>
-            <tr>
-              <td>
-                <div
-                  style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
-                >
-                  PROJECTS
+      {Array.isArray(data.projects) && data.projects.length > 0 && (
+        <section style={{ marginBottom: 18 }}>
+          <div style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}>
+            PROJECTS
+          </div>
+          {data.projects.map((project, pIdx) => (
+            <div key={pIdx} style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: "12pt", fontWeight: 700 }}>
+                {project.name}
+                {project.link && (
+                  <span style={{ marginLeft: 8 }}>
+                    <a
+                      href={project.link}
+                      className="text-indigo-700"
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "#1f6feb", textDecoration: "none" }}
+                    >
+                      {showLinks ? project.link : "Link"}
+                    </a>
+                  </span>
+                )}
+              </div>
+
+              <div style={{ fontSize: "10pt", paddingTop: 8 }}>
+                {project.role && (
+                  <div
+                    style={{ fontWeight: 600, marginBottom: 6 }}
+                  >{`Role: ${project.role}`}</div>
+                )}
+                <div style={{ marginBottom: 6, textAlign: "justify" }}>
+                  {project.description}
                 </div>
-                {data.projects.map((project, pIdx) => (
-                  <table
-                    key={pIdx}
-                    width="100%"
-                    cellPadding={4}
-                    cellSpacing={0}
-                    style={{ marginBottom: 12 }}
-                  >
-                    <tbody>
-                      <tr>
-                        <td style={{ fontSize: "12pt", fontWeight: 700 }}>
-                          {project.name}
-                          {project.link && (
-                            <span style={{ marginLeft: 8 }}>
-                              <a
-                                href={project.link}
-                                className="text-indigo-700"
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                {showLinks ? project.link : "Link"}
-                              </a>
-                            </span>
-                          )}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontSize: "10pt", paddingTop: 8 }}>
-                          {project.role && (
-                            <div style={{ fontWeight: 600, marginBottom: 6 }}>
-                              Role: {project.role}
-                            </div>
-                          )}
-                          <div
-                            style={{ marginBottom: 6, textAlign: "justify" }}
-                          >
-                            {project.description}
-                          </div>
-                          {project.technologies?.filter(Boolean).length > 0 && (
-                            <div style={{ fontStyle: "italic" }}>
-                              Technologies:{" "}
-                              {project.technologies.filter(Boolean).join(", ")}
-                            </div>
-                          )}
-                          {project.features?.filter(Boolean).length > 0 && (
-                            <div style={{ marginTop: 6 }}>
-                              Features:{" "}
-                              {project.features.filter(Boolean).join(", ")}
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                ))}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                {project.technologies?.filter(Boolean).length > 0 && (
+                  <div style={{ fontStyle: "italic" }}>
+                    Technologies:{" "}
+                    {project.technologies.filter(Boolean).join(", ")}
+                  </div>
+                )}
+                {project.features?.filter(Boolean).length > 0 && (
+                  <ul style={{ marginTop: 6, paddingLeft: 18 }}>
+                    {project.features.filter(Boolean).map((f, i) => (
+                      <li key={i} style={{ marginBottom: 6 }}>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          ))}
+        </section>
       )}
 
       {/* Education */}
-      <table
-        width="100%"
-        cellPadding={6}
-        cellSpacing={0}
-        className="mb-6 resume-section"
-      >
-        <tbody>
-          <tr>
-            <td>
-              <div
-                style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
-              >
-                EDUCATION
-              </div>
-              {data.education?.map((edu, eIdx) => (
-                <div key={eIdx} style={{ marginBottom: 10, fontSize: "11pt" }}>
-                  <div style={{ fontWeight: 700 }}>{edu.degree}</div>
-                  <div>{edu.institution}</div>
-                </div>
-              ))}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <section style={{ marginBottom: 18 }}>
+        <div style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}>
+          EDUCATION
+        </div>
+        {data.education?.map((edu, eIdx) => (
+          <div key={eIdx} style={{ marginBottom: 10, fontSize: "11pt" }}>
+            <div style={{ fontWeight: 700 }}>
+              {edu.degree}
+              {edu.year ? ` [${edu.year}]` : ""}
+            </div>
+            <div>{edu.institution}</div>
+          </div>
+        ))}
+      </section>
 
       {/* Achievements and Interests */}
       {(data.achievements?.filter(Boolean).length > 0 ||
         data.interests?.filter(Boolean).length > 0) && (
-        <table
-          width="100%"
-          cellPadding={6}
-          cellSpacing={0}
-          className="mb-6 resume-section"
-        >
-          <tbody>
-            <tr>
-              <td>
-                {data.achievements?.filter(Boolean).length > 0 && (
-                  <>
-                    <div
-                      style={{
-                        fontSize: "14pt",
-                        fontWeight: 700,
-                        marginBottom: 8,
-                      }}
-                    >
-                      ACHIEVEMENTS AND CERTIFICATES
-                    </div>
-                    <ul style={{ paddingLeft: 18, marginBottom: 12 }}>
-                      {data.achievements.filter(Boolean).map((ach, aIdx) => (
-                        <li
-                          key={aIdx}
-                          style={{ marginBottom: 6, fontSize: "10pt" }}
-                        >
-                          • {ach}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
+        <section style={{ marginBottom: 18 }}>
+          {data.achievements?.filter(Boolean).length > 0 && (
+            <>
+              <div
+                style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
+              >
+                ACHIEVEMENTS AND CERTIFICATES
+              </div>
+              <ul style={{ paddingLeft: 18, marginBottom: 12 }}>
+                {data.achievements.filter(Boolean).map((ach, aIdx) => (
+                  <li key={aIdx} style={{ marginBottom: 6, fontSize: "10pt" }}>
+                    {ach}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
 
-                {data.interests?.filter(Boolean).length > 0 && (
-                  <>
-                    <div
-                      style={{
-                        fontSize: "14pt",
-                        fontWeight: 700,
-                        marginBottom: 8,
-                      }}
-                    >
-                      INTERESTS
-                    </div>
-                    <div style={{ fontSize: "10pt" }}>
-                      {data.interests.filter(Boolean).join(", ")}
-                    </div>
-                  </>
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          {data.interests?.filter(Boolean).length > 0 && (
+            <>
+              <div
+                style={{ fontSize: "14pt", fontWeight: 700, marginBottom: 8 }}
+              >
+                INTERESTS
+              </div>
+              <div style={{ fontSize: "10pt" }}>
+                {data.interests.filter(Boolean).join(", ")}
+              </div>
+            </>
+          )}
+        </section>
       )}
     </div>
   );
