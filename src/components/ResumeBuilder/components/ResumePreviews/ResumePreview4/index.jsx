@@ -41,7 +41,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       .section-border {
         border-top: 1px solid #000 !important;
         margin-top: 8px !important;
-        margin-bottom: 0 !important;
+        margin-bottom: 4px !important;
         page-break-inside: avoid;
       }
       
@@ -49,6 +49,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       .resume-section {
         break-inside: avoid;
         page-break-inside: avoid;
+        margin-bottom: 4px !important;
       }
       
       /* Control page breaks */
@@ -79,7 +80,7 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
       }}
     >
       {/* Header */}
-      <div className="mb-2 resume-section">
+      <div className="mb-0 resume-section">
         <div className="flex justify-between items-start mb-2">
           <div>
             <h1
@@ -126,48 +127,13 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             )}
           </div>
         </div>
-        <hr className="section-border border-t border-black mt-2" />
+        <hr className="section-border border-t border-black mt-1 mb-0" />
       </div>
 
-      {/* Education */}
-      {showEducation && (
-        <div className="mb-2 resume-section">
-          <h2
-            className="text-center font-bold mb-1"
-            style={{ fontSize: "11pt", letterSpacing: "1px" }}
-          >
-            EDUCATION
-          </h2>
-          {data.education.map((edu, index) => (
-            <div key={index} className="flex justify-between items-start mb-2">
-              <div style={{ fontSize: "9pt" }}>
-                <div className="font-bold">{edu.institution}</div>
-                <div className="mt-0.5">
-                  <div>{edu.degree}</div>
-                  {edu.gpa && (
-                    <div>
-                      {edu.specialization}; GPA: {edu.gpa}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="text-right" style={{ fontSize: "9pt" }}>
-                <div>{edu.location}</div>
-                <div className="mt-0.5">
-                  <div className="font-semibold">{edu.graduationDate}</div>
-                  {edu.additionalInfo && <div>{edu.additionalInfo}</div>}
-                </div>
-              </div>
-            </div>
-          ))}
-          <hr className="section-border border-t border-black mt-2" />
-        </div>
-      )}
-
       {/* Skills Summary */}
-      <div className="mb-2 resume-section">
+      <div className="mb-0 resume-section">
         <h2
-          className="text-center font-bold mb-1"
+          className="text-center font-bold mb-1 mt-1"
           style={{ fontSize: "11pt", letterSpacing: "1px" }}
         >
           SKILLS SUMMARY
@@ -208,13 +174,13 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             </div>
           )}
         </div>
-        <hr className="section-border border-t border-black mt-2" />
+        <hr className="section-border border-t border-black mt-1 mb-0" />
       </div>
 
       {/* Work Experience */}
-      <div className="mb-2 resume-section">
+      <div className="mb-0 resume-section">
         <h2
-          className="text-center font-bold mb-1"
+          className="text-center font-bold mb-1 mt-1"
           style={{ fontSize: "11pt", letterSpacing: "1px" }}
         >
           WORK EXPERIENCE
@@ -255,14 +221,14 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
             ))}
           </div>
         ))}
-        <hr className="section-border border-t border-black mt-2" />
+        <hr className="section-border border-t border-black mt-1 mb-0" />
       </div>
 
       {/* Projects */}
       {data.projects && data.projects.length > 0 && (
-        <div className="mb-2 resume-section">
+        <div className="mb-0 resume-section">
           <h2
-            className="text-center font-bold mb-1"
+            className="text-center font-bold mb-1 mt-1"
             style={{ fontSize: "11pt", letterSpacing: "1px" }}
           >
             PROJECTS
@@ -313,15 +279,50 @@ const ResumePreviewPage = ({ resumeData, setViewMode }) => {
               </ul>
             </div>
           ))}
-          <hr className="section-border border-t border-black mt-2" />
+          <hr className="section-border border-t border-black mt-1 mb-0" />
+        </div>
+      )}
+
+      {/* Education */}
+      {showEducation && (
+        <div className="mb-0 resume-section">
+          <h2
+            className="text-center font-bold mb-1 mt-1"
+            style={{ fontSize: "11pt", letterSpacing: "1px" }}
+          >
+            EDUCATION
+          </h2>
+          {data.education.map((edu, index) => (
+            <div key={index} className="flex justify-between items-start mb-2">
+              <div style={{ fontSize: "9pt" }}>
+                <div className="font-bold">{edu.institution}</div>
+                <div className="mt-0.5">
+                  <div>{edu.degree}</div>
+                  {edu.gpa && (
+                    <div>
+                      {edu.specialization}; GPA: {edu.gpa}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="text-right" style={{ fontSize: "9pt" }}>
+                <div>{edu.location}</div>
+                <div className="mt-0.5">
+                  <div className="font-semibold">{edu.graduationDate}</div>
+                  {edu.additionalInfo && <div>{edu.additionalInfo}</div>}
+                </div>
+              </div>
+            </div>
+          ))}
+          <hr className="section-border border-t border-black mt-1 mb-0" />
         </div>
       )}
 
       {/* ACHIEVEMENTS AND CERTIFICATES */}
       {data.achievements.filter(Boolean).length > 0 && (
-        <div className="mb-2 resume-section">
+        <div className="mb-0 resume-section">
           <h2
-            className="text-center font-bold mb-1"
+            className="text-center font-bold mb-1 mt-1"
             style={{ fontSize: "11pt", letterSpacing: "1px" }}
           >
             ACHIEVEMENTS AND CERTIFICATES
