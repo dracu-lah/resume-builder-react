@@ -47,12 +47,15 @@ export default function ResumeBuilder() {
   if (viewMode === "preview" && resumeData) {
     return (
       <div className="bg-white dark:bg-zinc-900">
-        <div className="p-4 flex flex-col justify-center items-center  gap-2">
+        <div className="p-4 flex   flex-col justify-center items-center  gap-2">
           <h1 className="text-xl font-semibold">Available Templates</h1>
-          <div className="flex flex-col md:flex-row gap-2 ">
-            {templates.map((template) => (
-              <Button variant="outline" onClick={() => setTemplate(template)}>
-                {template.label}
+          <div className="flex flex-col overflow-auto w-full justify-center md:flex-row gap-2 ">
+            {templates.map((temp) => (
+              <Button
+                variant={template === temp ? "" : "outline"}
+                onClick={() => setTemplate(temp)}
+              >
+                {temp.label}
               </Button>
             ))}
           </div>
