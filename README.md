@@ -1,3 +1,5 @@
+# This Project has been moved to https://github.com/dracu-lah/resumebuilder
+
 # Resume Builder for Developers
 
 ![Preview](public/og-image.png)
